@@ -1,0 +1,19 @@
+services:
+  Core.MongoConfig:
+    factory:
+      class: ../../../../../contexts/core/_shared/infrastructure/persistence/mongo/MongoConfigFactory
+      method: 'createConfig'
+
+  Core.ConnectionManager:
+    factory:
+      class: ../../../../../contexts/_shared/infrastructure/persistence/mongo/MongoClientFactory
+      method: 'createClient'
+    arguments: ['core', '@Core.MongoConfig']
+
+  Core.groups.domain.GroupRepository:
+    class: ../../../../../contexts/core/groups/infrastructure/persistence/MongoGroupRepository
+    arguments: ['@Core.ConnectionManager']
+
+  Core.groups.application.GetGroups:
+    class: ../../../../../contexts/core/groups/application/GetGroups
+    arguments: ['@Core.groups.domain.GroupRepository']
