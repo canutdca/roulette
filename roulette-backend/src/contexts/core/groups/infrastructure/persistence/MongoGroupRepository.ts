@@ -15,7 +15,7 @@ export class MongoGroupRepository extends MongoRepository<Group> implements Grou
 	async getAll(): Promise<Group[]> {
 		return Promise.resolve([
 			new Group(new GroupId('b525efa2-77f0-11ec-90d6-0242ac120003'), new GroupName('Group 1')),
-			new Group(new GroupId('b525efa2-77f0-11ec-90d6-0242ac120003'), new GroupName('Group 2'))
+			new Group(new GroupId('63b78634-7a21-11ec-90d6-0242ac120003'), new GroupName('Group 2'))
 		])
 		// const collection = await this.collection()
 		// const documents = await collection.find<GroupDocument>({}).toArray()
