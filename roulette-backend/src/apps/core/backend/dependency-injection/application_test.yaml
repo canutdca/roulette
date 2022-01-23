@@ -1,2 +1,7 @@
 imports:
   - { resource: ./application.yaml }
+
+services:
+  Core.EnvironmentArranger:
+    class: ../../../../../tests/contexts/_shared/infrastructure/mongo/MongoEnvironmentArranger
+    arguments: ['@Core.ConnectionManager']
