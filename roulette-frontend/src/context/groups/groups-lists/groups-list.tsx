@@ -30,33 +30,12 @@ export function GroupsList() {
 					</Article>
 				</div>
 			))}
-			{groups.map((group) => (
-				<div key={group.id}>
-					<Article>
-						<Card>
-							{group.name}
-						</Card>
-					</Article>
-				</div>
-			))}
-			{groups.map((group) => (
-				<div key={group.id}>
-					<Article>
-						<Card>
-							{group.name}
-						</Card>
-					</Article>
-				</div>
-			))}
-			{groups.map((group) => (
-				<div key={group.id}>
-					<Article>
-						<Card>
-							{group.name}
-						</Card>
-					</Article>
-				</div>
-			))}
+
+			<Article>
+				<Card color={'secundary'}>
+					New group
+				</Card>
+			</Article>
 		</Section>
 	)
 }
