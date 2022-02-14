@@ -2,21 +2,11 @@ import styled from '@emotion/styled'
 
 export function Footer() {
 	return (
-		<footer>
-			<Root>
-				<H1>footer</H1>
-			</Root>
-		</footer>
+		<Root>
+			<H1>footer</H1>
+		</Root>
 	)
 }
-
-const FooterContainer = styled.footer`
-	padding: .3rem 0;
-	background-color: #0b0b0b;
-	width: 100%;
-	color: white;
-	text-align: center;
-`
 
 const Root = styled.div`
 	color: white;

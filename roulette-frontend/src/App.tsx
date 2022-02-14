@@ -1,6 +1,6 @@
-import { GroupsList } from './context/groups/groups-lists/groups-list'
-import { Header } from './_core/components/header'
-import { Footer } from './_core/components/footer'
+import { Routes } from './routes'
+import { Header } from '_core/components/Header'
+import { Footer } from '_core/components/Footer'
 import styled from '@emotion/styled'
 import './app.css'
 
@@ -12,7 +12,7 @@ function App() {
 				<Header />
 			</HeaderContainer>
 			<MainContainer>
-				<GroupsList />
+				<Routes />
 			</MainContainer>
 			<FooterContainer>
 				<Footer />

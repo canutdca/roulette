@@ -1,4 +1,4 @@
-import { getGroupsApi } from './groups-api.service'
+import { getGroupsApi } from '../shared/groups-api.service'
 
 export function useGroupsList() {
 

@@ -1,9 +1,15 @@
 import styled from '@emotion/styled'
+import { useNavigation } from '_core/hooks/useNavigation'
+import { HOME_ROUTE } from '../../routes'
 
 export function Header() {
+	const { goTo } = useNavigation()
+
+	const goToHome = () => goTo(HOME_ROUTE)
+
 	return (
 		<Root>
-			<H1>Roulette</H1>
+			<H1 onClick={goToHome}>Roulette</H1>
 		</Root>
 	)
 }
@@ -24,4 +30,9 @@ const H1 = styled.h1`
 	letter-spacing: -0.00833em;
 	font-family: "Roboto","Helvetica","Arial",sans-serif;
 	margin: 0;
+	cursor: pointer;
+	transition: color .2s ease-in-out;
+	&:hover {
+		color: #c3c3c3;
+	}
 `

@@ -3,3 +3,11 @@ services:
   Apps.core.controllers.GroupsGetController:
     class: ../../controllers/GroupsGetController
     arguments: ['@Core.groups.application.GetGroups']
+
+  Apps.core.controllers.GroupGetController:
+    class: ../../controllers/GroupGetController
+    arguments: ['@Core.groups.application.GetSingleGroup']
+
+  Apps.core.controllers.GroupPostController:
+    class: ../../controllers/GroupPostController
+    arguments: ['@Core.groups.application.CreateGroup']

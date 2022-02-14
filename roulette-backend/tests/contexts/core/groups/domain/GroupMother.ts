@@ -12,4 +12,8 @@ export class GroupMother {
 	static random(): Group {
 		return this.create(GroupIdMother.random(), GroupNameMother.random())
 	}
+
+	static randomButId(id: GroupId): Group {
+		return this.create(id, GroupNameMother.random())
+	}
 }

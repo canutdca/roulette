@@ -1,13 +1,12 @@
 const basePath = 'http://localhost:5000'
 
 export const httpGet = async <T>(path: string): Promise<T> => {
-
 	try {
 		const response = await fetch(basePath + path)
-
 		if (!response.ok) throw new HttpError(response.statusText)
 		return (await response.json() as T)
 	} catch (err) {
+		console.log(err)
 		throw new HttpError('ERR_CONNECTION_REFUSED')
 	}
 }

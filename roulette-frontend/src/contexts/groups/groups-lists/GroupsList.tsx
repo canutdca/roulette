@@ -1,12 +1,14 @@
 import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
+import { useNavigation } from '_core/hooks/useNavigation'
 import { Card } from '_shared/components/Card'
-import { Group } from '../_shared/group.model'
-import { useGroupsList } from './groups-lists.hook'
+import { GROUP_PAGE_ROUTE } from '../../../routes'
+import { Group } from '../shared/group.model'
+import { useGroupsList } from './groups-list.hook'
 
 export function GroupsList() {
-
 	const [groups, setGroups] = useState<Group[]>([])
+	const { goTo } = useNavigation()
 
 	const {
 		getGroups
@@ -19,11 +21,15 @@ export function GroupsList() {
 		fetchData()
 	}, [])
 
+	const goToDetail = (id: string) => {
+		goTo(`${GROUP_PAGE_ROUTE}/${id}`)
+	}
+
 	return (
 		<Section>
 			{groups.map((group) => (
 				<div key={group.id}>
-					<Article>
+					<Article onClick={() => goToDetail(group.id)}>
 						<Card>
 							{group.name}
 						</Card>
@@ -37,6 +43,7 @@ export function GroupsList() {
 				</Card>
 			</Article>
 		</Section>
+
 	)
 }
 

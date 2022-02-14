@@ -6,6 +6,12 @@
 			],
 			"_shared/*": [
 				"./src/_shared/*"
+			],
+			"pages/*": [
+				"./src/pages/*"
+			],
+			"contexts/*": [
+				"./src/contexts/*"
 			]
 		},
 		"target": "ESNext",

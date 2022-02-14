@@ -17,3 +17,11 @@ services:
   Core.groups.application.GetGroups:
     class: ../../../../../contexts/core/groups/application/GetGroups
     arguments: ['@Core.groups.domain.GroupRepository']
+
+  Core.groups.application.GetSingleGroup:
+    class: ../../../../../contexts/core/groups/application/GetSingleGroup
+    arguments: ['@Core.groups.domain.GroupRepository']
+
+  Core.groups.application.CreateGroup:
+    class: ../../../../../contexts/core/groups/application/CreateGroup
+    arguments: ['@Core.groups.domain.GroupRepository']

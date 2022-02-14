@@ -1,15 +1,18 @@
 import { Group } from '../../../../../src/contexts/core/groups/domain/Group'
-import { GroupName } from '../../../../../src/contexts/core/groups/domain/GroupName'
 import { GroupId } from '../../../../../src/contexts/core/_shared/domain/Groups/GroupId'
+import { GroupMother } from '../domain/GroupMother'
 import { GroupRepository } from './../../../../../src/contexts/core/groups/domain/GroupRepository'
 
 export class GroupRepositoryMock implements GroupRepository {
+	getSingle(id: GroupId): Promise<Group | null> {
+		return Promise.resolve(GroupMother.randomButId(id))
+	}
 	private mockSave = jest.fn()
 
 	getAll(): Promise<Group[]> {
 		return Promise.resolve([
-			new Group(new GroupId('b525efa2-77f0-11ec-90d6-0242ac120003'), new GroupName('Group 1')),
-			new Group(new GroupId('b525efa2-77f0-11ec-90d6-0242ac120003'), new GroupName('Group 2'))
+			GroupMother.random(),
+			GroupMother.random(),
 		])
 	}
 

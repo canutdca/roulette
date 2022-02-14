@@ -1,4 +1,4 @@
-export interface GetGroupResponse {
+export interface GetGroupsResponse {
 	list: GroupResponse[]
 }
 
