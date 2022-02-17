@@ -22,7 +22,7 @@ describe('MongoGroupRepository', () => {
 		await repository.save(group)
 	})
 
-	it('getrAll() method', async () => {
+	it('getAll() method', async () => {
 		const expectedGroups = [
 			GroupMother.random(),
 			GroupMother.random()
@@ -34,9 +34,18 @@ describe('MongoGroupRepository', () => {
 
 		results.forEach(group => {
 			const expectedGroup = expectedGroups.find(g => g.id.value === group.id.value)
-			expect(expectedGroup?.id.value).toBe(group.id.value)
-			expect(expectedGroup?.name.value).toBe(group.name.value)
+			expect(expectedGroup!.id.value).toBe(group.id.value)
+			expect(expectedGroup!.name.value).toBe(group.name.value)
 		})
+	})
 
+	it('getSingle() method', async () => {
+		const expectedGroup = GroupMother.random()
+		await repository.save(expectedGroup)
+
+		const group = await repository.getSingle(expectedGroup.id)
+		expect(group).not.toBeNull();
+		expect(expectedGroup.id.value).toBe(group!.id.value)
+		expect(expectedGroup.name.value).toBe(group!.name.value)
 	})
 })

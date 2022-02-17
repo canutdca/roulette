@@ -5,7 +5,8 @@ const MAX_LENGTH = 14
 
 export class WordMother {
 	static random(): string {
-		const randomNumber = Math.floor(Math.random() * (MAX_LENGTH - MIN_LENGTH)) + MIN_LENGTH
+		let randomNumber = Math.floor(Math.random() * (MAX_LENGTH - MIN_LENGTH)) + MIN_LENGTH
+		if(randomNumber === 0) randomNumber = 1
 		return MotherCreator.random().lorem.word(randomNumber)
 	}
 }
