@@ -8,7 +8,7 @@ export function Routes() {
 	return (
 		<Fragment>
 			<Route path={HOME_ROUTE} component={renderHomePage} />
-			<Route path={`${GROUP_PAGE_ROUTE}/:id`} component={renderGroupPage} />
+			<Route path={`${GROUP_PAGE_ROUTE}/:id?`} component={renderGroupPage} />
 		</Fragment>
 	)
 }

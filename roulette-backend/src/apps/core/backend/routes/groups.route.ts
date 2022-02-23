@@ -12,8 +12,9 @@ export const register = (router: Router) => {
 	router.get('/groups/:id', reqSchemaGroupGet, validateReqSchema, (req: Request, res: Response) =>
 		groupGetController.run(req, res))
 
-	const reqSchemaGroupPost = [ body('id').exists().isString(), body('name').exists().isString()]
-	const groupPostController = container.get('Apps.core.controllers.GroupPostController')
-	router.post('/groups', reqSchemaGroupPost, validateReqSchema, (req: Request, res: Response) =>
-		groupPostController.run(req, res))
+	const reqSchemaGroupPut = [ body('id').exists().isString(), body('name').isString().isLength({ min: 1 })]
+	const groupPutController = container.get('Apps.core.controllers.GroupPutController')
+	// router.put('/groups', (req: Request, res: Response) => groupPutController.run(req, res))
+	router.put('/groups', reqSchemaGroupPut, validateReqSchema, (req: Request, res: Response) =>
+		groupPutController.run(req, res))
 }

@@ -1,24 +1,21 @@
 import styled from '@emotion/styled'
-import { Fragment, useEffect, useState } from 'react'
-import { Group } from '../shared/group.model'
+import { Fragment, useEffect } from 'react'
+import { InputText } from '_shared/components/InputText'
 import { useGroupDetail } from './group-detail.hook'
 
 export interface GroupDetailProps {
-	id: string
+	id: string | undefined
 }
 export function GroupDetail({ id }: GroupDetailProps) {
 
-	const [group, setGroup] = useState<Group>()
-
 	const {
-		getGroup
+		group,
+		getGroup,
+		setGroupName
 	} = useGroupDetail(id)
-	useEffect(() => {
-		const fetchData = async () => {
-			setGroup(await getGroup())
-		}
 
-		fetchData()
+	useEffect(() => {
+		getGroup()
 	}, [])
 
 	return (
@@ -27,7 +24,12 @@ export function GroupDetail({ id }: GroupDetailProps) {
 				{group && (
 					<Fragment>
 						<Header>
-							<h1>{group.name}</h1>
+							<InputText
+								modeEditDefault={!id}
+								value={group.name}
+								onChange={setGroupName}
+								style={'title'}
+							/>
 						</Header>
 						<span>contenido</span>
 					</Fragment>

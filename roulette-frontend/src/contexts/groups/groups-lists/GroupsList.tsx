@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigation } from '_core/hooks/useNavigation'
 import { Card } from '_shared/components/Card'
 import { GROUP_PAGE_ROUTE } from '../../../routes'
-import { Group } from '../shared/group.model'
+import { Group } from '../domain/group.model'
 import { useGroupsList } from './groups-list.hook'
 
 export function GroupsList() {
@@ -21,15 +21,18 @@ export function GroupsList() {
 		fetchData()
 	}, [])
 
-	const goToDetail = (id: string) => {
+	const goToGroupDetail = (id: string) => {
 		goTo(`${GROUP_PAGE_ROUTE}/${id}`)
+	}
+	const goToNewGroup = () => {
+		goTo(GROUP_PAGE_ROUTE)
 	}
 
 	return (
 		<Section>
 			{groups.map((group) => (
 				<div key={group.id}>
-					<Article onClick={() => goToDetail(group.id)}>
+					<Article onClick={() => goToGroupDetail(group.id)}>
 						<Card>
 							{group.name}
 						</Card>
@@ -37,7 +40,7 @@ export function GroupsList() {
 				</div>
 			))}
 
-			<Article>
+			<Article onClick={() => goToNewGroup()}>
 				<Card color={'secundary'}>
 					New group
 				</Card>

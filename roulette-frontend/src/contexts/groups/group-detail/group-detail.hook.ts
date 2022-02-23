@@ -1,11 +1,30 @@
-import { getGroupApi } from '../shared/groups-api.service'
+import { useState } from 'react'
+import { Group } from '../domain/group.model'
+import { getGroupApi, saveGroupApi } from '../shared/groups-api.service'
 
-export function useGroupDetail(id: string) {
+export function useGroupDetail(id: string | undefined) {
 
-	const getGroup = async () =>
-		await getGroupApi(id)
+	const [group, setGroup] = useState<Group>()
+	const getGroup = async () => {
+		if (!id) return setGroup(new Group())
+		setGroup(await getGroupApi(id))
+	}
+
+	const setGroupName = (newName: string): Promise<void> => {
+		if (!group) return Promise.resolve()
+		const groupUpdating = group.clone()
+		try {
+			groupUpdating.name = newName
+			setGroup(groupUpdating)
+			return saveGroupApi(groupUpdating)
+		} catch (error: any) {
+			return error.message
+		}
+	}
 
 	return {
-		getGroup
+		group,
+		getGroup,
+		setGroupName
 	}
 }

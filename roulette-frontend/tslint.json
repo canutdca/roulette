@@ -51,7 +51,7 @@
 				"constructor": "never"
 			}
 		],
-		"prefer-method-signature": true,
+		"prefer-method-signature": false,
 		"arrow-return-shorthand": [
 			true,
 			"multiline"

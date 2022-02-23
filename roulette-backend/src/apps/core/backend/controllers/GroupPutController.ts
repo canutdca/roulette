@@ -3,13 +3,14 @@ import httpStatus from 'http-status'
 import { CreateGroup } from '../../../../contexts/core/groups/application/CreateGroup'
 import { Controller } from './Controller'
 
-export class GroupPostController implements Controller {
-	constructor(private CreateGroup: CreateGroup) {}
+export class GroupPutController implements Controller {
+	constructor(private createGroup: CreateGroup) {}
 
 	async run(req: Request, res: Response) {
+		console.log('ruuun', req.body)
 		const { id, name } = req.body
-		await this.CreateGroup.run({id, name})
+		await this.createGroup.run({id, name})
 
-		res.status(httpStatus.CREATED).send()
+		res.status(httpStatus.OK).send()
 	}
 }

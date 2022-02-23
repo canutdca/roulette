@@ -36,9 +36,10 @@ We develop differents iterations:
 12. Update Ceremony: Reset
 13. Ceremony: Play and repeat
 14. Delete Ceremony from Ceremony Detail
-14. Delete Ceremony from Group Detail
-14. Delete Group from Group Detail
-14. Delete Group from Home
+15. Delete Ceremony from Group Detail
+16. Delete Group from Group Detail
+17. Delete Group from Home
+18. Validations
 
 # Models:
 - Group: 'Name', 'Members' and 'Ceremonies'

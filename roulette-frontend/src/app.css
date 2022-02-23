@@ -2,8 +2,14 @@
 	box-sizing: border-box;
 }
 
-html, body, #root {
+html, body, input, #root {
 	height: 100%;
 	font-family: Roboto;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

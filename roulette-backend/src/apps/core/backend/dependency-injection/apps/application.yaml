@@ -8,6 +8,6 @@ services:
     class: ../../controllers/GroupGetController
     arguments: ['@Core.groups.application.GetSingleGroup']
 
-  Apps.core.controllers.GroupPostController:
-    class: ../../controllers/GroupPostController
+  Apps.core.controllers.GroupPutController:
+    class: ../../controllers/GroupPutController
     arguments: ['@Core.groups.application.CreateGroup']

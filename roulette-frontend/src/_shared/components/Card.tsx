@@ -22,7 +22,7 @@ export function Card({ children, color = 'primary' }: RCardProps) {
 			background-color: #96c3e3;
 			transform: scale(1.05);
 		}
-`
+	`
 	return (
 		<Root>
 			<span>
