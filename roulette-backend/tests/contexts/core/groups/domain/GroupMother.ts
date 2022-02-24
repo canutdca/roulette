@@ -1,19 +1,20 @@
+import { ListMother } from './../../../_shared/domain/ListMother'
 import { Group } from '../../../../../src/contexts/core/groups/domain/Group'
-import { GroupName } from '../../../../../src/contexts/core/groups/domain/GroupName'
 import { GroupId } from '../../../../../src/contexts/core/_shared/domain/groups/GroupId'
 import { GroupIdMother } from '../../_shared/domain/groups/GroupIdMother'
 import { GroupNameMother } from './GroupNameMother'
+import { GroupMemberMother } from './GroupMemberMother'
 
 export class GroupMother {
-	static create(id: GroupId, name: GroupName): Group {
-		return new Group(id, name)
-	}
-
 	static random(): Group {
-		return this.create(GroupIdMother.random(), GroupNameMother.random())
+		return new Group(
+			GroupIdMother.random(),
+			GroupNameMother.random(),
+			ListMother.randomWithRandomElements(GroupMemberMother.random)
+		)
 	}
 
 	static randomButId(id: GroupId): Group {
-		return this.create(id, GroupNameMother.random())
+		return new Group(id, GroupNameMother.random(), ListMother.randomWithRandomElements(GroupMemberMother.random))
 	}
 }

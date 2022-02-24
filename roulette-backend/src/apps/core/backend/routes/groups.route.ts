@@ -14,7 +14,6 @@ export const register = (router: Router) => {
 
 	const reqSchemaGroupPut = [ body('id').exists().isString(), body('name').isString().isLength({ min: 1 })]
 	const groupPutController = container.get('Apps.core.controllers.GroupPutController')
-	// router.put('/groups', (req: Request, res: Response) => groupPutController.run(req, res))
 	router.put('/groups', reqSchemaGroupPut, validateReqSchema, (req: Request, res: Response) =>
 		groupPutController.run(req, res))
 }

@@ -9,9 +9,13 @@ export class GetGroups {
 	}
 
 	async run(): Promise<GetGroupsResponse> {
-		const courses = await this.repository.getAll()
+		const groups = await this.repository.getAll()
 		return {
-			list: courses.map(course => ({id: course.id.value, name: course.name.value}))
+			list: groups.map(group => ({
+				id: group.id.value,
+				name: group.name.value,
+				members: group.members.map(member => member.value)
+			}))
 		}
 	}
 }

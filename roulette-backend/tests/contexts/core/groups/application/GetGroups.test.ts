@@ -16,6 +16,7 @@ describe('GetGroups', () => {
 		result.list.forEach(group => {
 			expect(group.id).toBeTruthy()
 			expect(group.name).toBeTruthy()
+			group.members.forEach(member => expect(member).toBeTruthy())
 		})
 	})
 })

@@ -5,4 +5,5 @@ export interface GetGroupsResponse {
 export interface GroupResponse {
 	id: string
 	name: string
+	members: string[]
 }

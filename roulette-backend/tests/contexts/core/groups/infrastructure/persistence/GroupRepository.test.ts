@@ -36,6 +36,22 @@ describe('MongoGroupRepository', () => {
 			const expectedGroup = expectedGroups.find(g => g.id.value === group.id.value)
 			expect(expectedGroup!.id.value).toBe(group.id.value)
 			expect(expectedGroup!.name.value).toBe(group.name.value)
+			group.members.forEach(member => {
+				const expectedMember = expectedGroup!.members.find(m => m.value === member.value)
+				expect(expectedMember!.value).toBe(member.value)
+
+			})
+		})
+
+		expectedGroups.forEach(expectedGroup => {
+			const group = results.find(g => g.id.value === expectedGroup.id.value)
+			expect(expectedGroup.id.value).toBe(group!.id.value)
+			expect(expectedGroup.name.value).toBe(group!.name.value)
+			expectedGroup.members.forEach(expectedMember => {
+				const member = group!.members.find(m => m.value === expectedMember.value)
+				expect(expectedMember.value).toBe(member!.value)
+
+			})
 		})
 	})
 
@@ -44,7 +60,7 @@ describe('MongoGroupRepository', () => {
 		await repository.save(expectedGroup)
 
 		const group = await repository.getSingle(expectedGroup.id)
-		expect(group).not.toBeNull();
+		expect(group).not.toBeNull()
 		expect(expectedGroup.id.value).toBe(group!.id.value)
 		expect(expectedGroup.name.value).toBe(group!.name.value)
 	})

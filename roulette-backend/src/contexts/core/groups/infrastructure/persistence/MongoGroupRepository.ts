@@ -6,7 +6,7 @@ import { GroupRepository } from '../../domain/GroupRepository'
 interface GroupDocument {
 	_id: string
 	name: string
-	duration: string
+	members: string[]
 }
 
 export class MongoGroupRepository extends MongoRepository<Group> implements GroupRepository {
@@ -16,7 +16,7 @@ export class MongoGroupRepository extends MongoRepository<Group> implements Grou
 		const documents = await collection.find<GroupDocument>({}).toArray()
 
 		return documents.map(document =>
-			Group.fromPrimitives({ name: document.name, id: document._id }))
+			Group.fromPrimitives({ name: document.name, id: document._id, members: document.members }))
 	}
 
 	async getSingle(id: GroupId): Promise<Group | null> {
@@ -25,7 +25,7 @@ export class MongoGroupRepository extends MongoRepository<Group> implements Grou
 
 		if (!document) return null
 
-		return Group.fromPrimitives({ name: document.name, id: document._id })
+		return Group.fromPrimitives({ name: document.name, id: document._id, members: document.members })
 	}
 
 	save(group: Group): Promise<void> {

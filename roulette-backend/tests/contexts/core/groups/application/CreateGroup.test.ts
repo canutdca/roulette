@@ -1,5 +1,6 @@
 import { CreateGroup } from '../../../../../src/contexts/core/groups/application/CreateGroup'
 import { Group } from '../../../../../src/contexts/core/groups/domain/Group'
+import { GroupMember } from '../../../../../src/contexts/core/groups/domain/GroupMember'
 import { GroupName } from '../../../../../src/contexts/core/groups/domain/GroupName'
 import { GroupId } from '../../../../../src/contexts/core/_shared/domain/Groups/GroupId'
 import { GroupRepositoryMock } from '../__mocks__/GroupRepositoryMock'
@@ -18,7 +19,11 @@ describe('CreateGroup', () => {
 		const request = CreateGroupRequestMother.random()
 		await service.run(request)
 
-		const expectedGroup = new Group(new GroupId(request.id), new GroupName(request.name))
+		const expectedGroup = new Group(
+			new GroupId(request.id),
+			new GroupName(request.name),
+			request.members?.map(member => new GroupMember(member)) || []
+		)
 		repository.assertLastSavedGroupIs(expectedGroup)
 	})
 })

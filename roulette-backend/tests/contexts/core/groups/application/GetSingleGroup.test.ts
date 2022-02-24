@@ -17,5 +17,6 @@ describe('GetSingleGroup', () => {
 
 		expect(group.id).toBeTruthy()
 		expect(group.name).toBeTruthy()
+		group.members.forEach(member => expect(member).toBeTruthy())
 	})
 })

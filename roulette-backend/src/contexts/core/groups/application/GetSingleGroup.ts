@@ -15,7 +15,8 @@ export class GetSingleGroup {
 		if (!group) return null
 		return {
 			id: group.id.value,
-			name: group.name.value
+			name: group.name.value,
+			members: group.members.map(member => member.value)
 		}
 	}
 }
