@@ -6,7 +6,7 @@
 		"build": "tsc && vite build",
 		"preview": "vite preview",
 		"test": "npm run test:unit && npm run test:e2e",
-		"test:unit": "jest",
+		"test:unit": "jest --watch",
 		"test:e2e": "cypress open"
 	},
 	"dependencies": {

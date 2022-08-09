@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react'
+import { render, waitFor, fireEvent } from '@testing-library/react'
 import { GroupsList } from './GroupsList'
 
 const responseGetApi = [
@@ -6,16 +6,25 @@ const responseGetApi = [
 	{ id: 'id2', name: 'group 2' },
 ]
 
+const mockLocation = jest.fn()
+jest.mock('wouter', () => {
+	return {
+		useLocation: ['', () => jest.fn()]
+	}
+})
+
 describe('GroupsList Test:', () => {
-	describe('When component is rendered', () => {
-		it('show list of groups', async () => {
+	
+	describe('When user click to navigate', () => {
+		it('go to "new group"', async () => {
 			const { mockGet } = setupMocks()
-			const expectedGroups = responseGetApi
 
 			const component = render(<GroupsList />)
-
-			await waitFor(() => expect(mockGet).toHaveBeenCalledTimes(1))
-			for (const group of expectedGroups) await component.findByText(group.name)
+			
+			fireEvent.click(component.getByRole('button'))
+			// expect(mockLocation).toHaveBeenCalledTimes(1)
+			
+			// console.log(button)
 		})
 	})
 })
@@ -28,6 +37,7 @@ function setupMocks() {
 	})) as jest.Mock
 
 	global.fetch = mockGet
+
 
 	return {
 		mockGet

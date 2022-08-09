@@ -28,6 +28,7 @@ export function GroupsList() {
 		goTo(GROUP_PAGE_ROUTE)
 	}
 
+	const [show, setShow] = useState(false)
 	return (
 		<Section>
 			{groups.map((group) => (
@@ -45,6 +46,10 @@ export function GroupsList() {
 					New group
 				</Card>
 			</Article>
+			{/* <button onClick={() => setShow(!show)}>toggle</button>
+			{show && <h3>contenido</h3>} */}
+
+			<button onClick={goToNewGroup}>navigate</button>
 		</Section>
 
 	)
