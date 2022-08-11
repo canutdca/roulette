@@ -4,7 +4,7 @@ export class CoreBackendApp {
 	server?: Server
 
 	async start() {
-		const port = process.env.PORT || '5001'
+		const port = process.env.PORT || '5000'
 		this.server = new Server(port)
 		return this.server.listen()
 	}

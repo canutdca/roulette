@@ -1,4 +1,4 @@
-import convict from 'convict'
+var convict = require('convict');
 
 const coreConfig = convict({
 	env: {
