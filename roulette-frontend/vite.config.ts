@@ -10,7 +10,7 @@ export default defineConfig({
 			'_core': path.resolve(__dirname, './src/_core'),
 			'_shared': path.resolve(__dirname, './src/_shared'),
 			'pages': path.resolve(__dirname, './src/pages'),
-			'contexts': path.resolve(__dirname, './src/contexts')
+			'contexts': path.resolve(__dirname, './src/contexts'),
 		},
 	},
 })

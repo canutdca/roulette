@@ -7,18 +7,15 @@ import { Group } from '../domain/group.model'
 import { useGroupsList } from './groups-list.hook'
 
 export function GroupsList() {
-	const [groups, setGroups] = useState<Group[]>([])
 	const { goTo } = useNavigation()
 
 	const {
+		groups,
 		getGroups
 	} = useGroupsList()
-	useEffect(() => {
-		const fetchData = async () => {
-			setGroups(await getGroups())
-		}
 
-		fetchData()
+	useEffect(() => {
+		getGroups()
 	}, [])
 
 	const goToGroupDetail = (id: string) => {
@@ -28,7 +25,6 @@ export function GroupsList() {
 		goTo(GROUP_PAGE_ROUTE)
 	}
 
-	const [show, setShow] = useState(false)
 	return (
 		<Section>
 			{groups.map((group) => (
