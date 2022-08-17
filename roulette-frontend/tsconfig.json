@@ -12,6 +12,12 @@
 			],
 			"contexts/*": [
 				"./src/contexts/*"
+			],
+			"__mocks__/*": [
+				"./src/__mocks__/*"
+			],
+			"__test-utils__/*": [
+				"./src/__test-utils__/*"
 			]
 		},
 		"target": "ESNext",
