@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Group } from '../domain/group.model'
-import { getGroupApi, saveGroupApi } from '../shared/groups-api.service'
+import { deleteGroupApi, getGroupApi, saveGroupApi } from '../shared/groups-api.service'
 
 export function useGroupDetail(id: string | undefined) {
 
@@ -22,9 +22,14 @@ export function useGroupDetail(id: string | undefined) {
 		}
 	}
 
+	const deleteGroup = async (): Promise<void> => {
+		await deleteGroupApi(id!)
+	}
+
 	return {
 		group,
 		getGroup,
-		setGroupName
+		setGroupName,
+		deleteGroup
 	}
 }

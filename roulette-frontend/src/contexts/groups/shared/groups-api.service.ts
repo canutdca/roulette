@@ -1,4 +1,4 @@
-import { httpGet, httpPutOrPost } from '_core/services/http.service'
+import { httpDelete, httpGet, httpPutOrPost } from '_core/services/http.service'
 import { Group } from '../domain/group.model'
 
 const endpoint = '/groups'
@@ -17,4 +17,8 @@ export async function getGroupApi(id: string): Promise<Group> {
 
 export async function saveGroupApi(group: Group): Promise<void> {
 	await httpPutOrPost<Group>(endpoint, group)
+}
+
+export async function deleteGroupApi(id: string): Promise<void> {
+	await httpDelete(`${endpoint}/${id}`)
 }

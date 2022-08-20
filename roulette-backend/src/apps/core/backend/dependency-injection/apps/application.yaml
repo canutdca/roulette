@@ -11,3 +11,7 @@ services:
   Apps.core.controllers.GroupPutController:
     class: ../../controllers/GroupPutController
     arguments: ['@Core.groups.application.CreateGroup']
+
+  Apps.core.controllers.GroupDeleteController:
+    class: ../../controllers/GroupDeleteController
+    arguments: ['@Core.groups.application.DeleteGroup']

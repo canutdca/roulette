@@ -16,4 +16,9 @@ export const register = (router: Router) => {
 	const groupPutController = container.get('Apps.core.controllers.GroupPutController')
 	router.put('/groups', reqSchemaGroupPut, validateReqSchema, (req: Request, res: Response) =>
 		groupPutController.run(req, res))
+
+	const reqSchemaGroupDelete = [ param('id').exists().isString() ]
+	const groupDeleteController = container.get('Apps.core.controllers.GroupDeleteController')
+	router.delete('/groups/:id', reqSchemaGroupDelete, validateReqSchema, (req: Request, res: Response) =>
+		groupDeleteController.run(req, res))
 }

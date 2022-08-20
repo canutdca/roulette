@@ -25,3 +25,7 @@ services:
   Core.groups.application.CreateGroup:
     class: ../../../../../contexts/core/groups/application/CreateGroup
     arguments: ['@Core.groups.domain.GroupRepository']
+
+  Core.groups.application.DeleteGroup:
+    class: ../../../../../contexts/core/groups/application/DeleteGroup
+    arguments: ['@Core.groups.domain.GroupRepository']

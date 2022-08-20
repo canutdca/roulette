@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { Fragment, useEffect } from 'react'
+import { useNavigation } from '_core/hooks/useNavigation'
 import { InputText } from '_shared/components/InputText'
+import { HOME_ROUTE } from '../../../routes'
 import { useGroupDetail } from './group-detail.hook'
 
 export interface GroupDetailProps {
@@ -8,16 +10,23 @@ export interface GroupDetailProps {
 }
 export function GroupDetail({ id }: GroupDetailProps) {
 
+	const { goTo } = useNavigation()
+
 	const {
 		group,
 		getGroup,
-		setGroupName
+		setGroupName,
+		deleteGroup,
 	} = useGroupDetail(id)
 
 	useEffect(() => {
 		getGroup()
 	}, [])
 
+	const remove = async (): Promise<void> => {
+		await deleteGroup()
+		goTo(HOME_ROUTE)
+	}
 	return (
 		<Section>
 			<Article>
@@ -30,6 +39,7 @@ export function GroupDetail({ id }: GroupDetailProps) {
 								onChange={setGroupName}
 								style={'title'}
 							/>
+							<Delete onClick={remove}>Delete</Delete>
 						</Header>
 						<span>contenido</span>
 					</Fragment>
@@ -49,10 +59,17 @@ const Section = styled.section`
 
 const Article = styled.article`
 	margin: 8px;
+	max-width: 500px;
 `
 
 const Header = styled.header`
 	margin: 8px;
+	display: flex;
+	justify-content: space-between;
+`
+
+const Delete = styled.button`
+
 `
 
 const H1 = styled.h1`

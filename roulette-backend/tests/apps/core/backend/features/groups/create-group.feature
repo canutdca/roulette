@@ -1,4 +1,4 @@
-Feature: Get a list of groups
+Feature: Create group
 
 	Scenario: Save group with members
 		When I send a PUT request to "/groups" with body:

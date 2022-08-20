@@ -31,6 +31,21 @@ export const httpPutOrPost = async <T>(path: string, objectToSave: Saveable): Pr
 	}
 }
 
+export const httpDelete = async <T>(path: string): Promise<void> => {
+	try {
+		const response = await fetch(basePath + path, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		})
+		if (!response.ok) throw new HttpError(response.statusText)
+	} catch (err) {
+		alert(err)
+		throw new HttpError('ERR_CONNECTION_REFUSED')
+	}
+}
+
 export class HttpError extends Error {
 	constructor(message: string) {
 		super(message)

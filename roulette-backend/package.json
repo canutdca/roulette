@@ -14,6 +14,7 @@
         "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules  ./src/apps/core/backend/start.ts",
         "test": "npm run test:unit && npm run test:features",
         "test:unit": "NODE_ENV=test jest",
+        "test:unit:watch": "NODE_ENV=test jest --watch",
         "test:features": "npm run test:core:backend:features",
         "test:core:backend:features": "NODE_ENV=test cucumber-js -p core_backend"
     },

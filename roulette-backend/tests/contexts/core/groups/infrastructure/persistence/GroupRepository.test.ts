@@ -2,6 +2,7 @@ import { GroupMother } from '../../domain/GroupMother'
 import { GroupRepository } from '../../../../../../src/contexts/core/groups/domain/GroupRepository'
 import container from '../../../../../../src/apps/core/backend/dependency-injection'
 import { EnvironmentArranger } from '../../../../_shared/infrastructure/arranger/EnvironmentArranger'
+import { PeristenceErrorBecauseNotExist } from '../../../../../../src/contexts/_shared/infrastructure/persistence/persistence-errors'
 
 const repository: GroupRepository = container.get('Core.groups.domain.GroupRepository')
 const environmentArrenger: Promise<EnvironmentArranger> = container.get('Core.EnvironmentArranger')
@@ -18,8 +19,18 @@ afterAll(async () => {
 describe('MongoGroupRepository', () => {
 	it('save() method', async () => {
 		const group = GroupMother.random()
-
 		await repository.save(group)
+	})
+
+	it('delete() method with existing group', async() => {
+		const group = GroupMother.random()
+		await repository.save(group)
+		await repository.delete(group.id)
+	})
+
+	it('delete() method with not existing group', async() => {
+		const group = GroupMother.random()
+		await expect(repository.delete(group.id)).rejects.toThrow(PeristenceErrorBecauseNotExist)
 	})
 
 	it('getAll() method', async () => {
@@ -39,7 +50,6 @@ describe('MongoGroupRepository', () => {
 			group.members.forEach(member => {
 				const expectedMember = expectedGroup!.members.find(m => m.value === member.value)
 				expect(expectedMember!.value).toBe(member.value)
-
 			})
 		})
 
