@@ -38,9 +38,11 @@ export function GroupsList() {
 			))}
 
 			<Article onClick={() => goToNewGroup()}>
+			<div data-testid="new">
 				<Card color={'secundary'}>
 					New group
 				</Card>
+			</div>
 			</Article>
 			{/* <button onClick={() => setShow(!show)}>toggle</button>
 			{show && <h3>contenido</h3>} */}

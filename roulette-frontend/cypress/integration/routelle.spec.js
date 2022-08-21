@@ -5,6 +5,24 @@ describe('Roulette App', () => {
 	})
 	it('group can be created', () => {
 		cy.visit('http://localhost:3000/')
-		cy.contains('New').click()
+		cy.get('[data-testid=new]').click()
+		cy.get('input[name=name]').type('new group created')
+		cy.get('input[type=submit][value=Save]').click()
 	})
+	it('group can be updated', () => {
+		cy.visit('http://localhost:3000/')
+		cy.contains('new group created').click()
+		cy.get('button').contains('Edit').click()
+		cy.get('input[name=name]').type(' edit')
+		cy.get('input[type=submit]').contains('Save').click()
+		cy.go('back')
+		cy.contains('new group created edit')
+	})
+	it('group can be deleted', () => {
+		cy.visit('http://localhost:3000/')
+		cy.contains('new group created edit').click()
+		cy.get('button').contains('Delete').click()
+		cy.contains('new group created edit').should('not.exist')
+	})
+	
 })
