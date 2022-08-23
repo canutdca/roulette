@@ -13,7 +13,8 @@ export async function getGroupApi(id: string): Promise<Group> {
 	return Group.fromPrimitives({
 		id: response.id,
 		name: response.name,
-		members: response.members
+		members: response.members,
+		roulettes: response.roulettes
 	})
 }
 

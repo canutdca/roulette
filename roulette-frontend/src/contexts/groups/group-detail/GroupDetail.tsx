@@ -4,6 +4,7 @@ import { useNavigation } from '_core/hooks/useNavigation'
 import { InputText } from '_shared/components/InputText'
 import { HOME_ROUTE } from '../../../routes'
 import { useGroupDetail } from './group-detail.hook'
+import { ROULETTE_PAGE_ROUTE } from '../../../routes/index';
 
 export interface GroupDetailProps {
 	id: string | undefined
@@ -19,10 +20,14 @@ export function GroupDetail({ id }: GroupDetailProps) {
 		deleteGroup,
 		addMember,
 		editMember,
-		deleteMember
+		deleteMember,
+		addRoulette,
+		editRoulette,
+		deleteRoulette
 	} = useGroupDetail(id)
 
 	const [showAddMember, setShowAddMember] = useState<boolean>(false)
+	const [showAddRoulette, setShowAddRoulette] = useState<boolean>(false)
 
 	useEffect(() => {
 		getGroup()
@@ -33,10 +38,20 @@ export function GroupDetail({ id }: GroupDetailProps) {
 		setShowAddMember(false)
 	}
 
+	const addNewRoulette = async (newMember: string) => {
+		const newRouletteId = await addRoulette(newMember)
+		goToRoulette(newRouletteId)
+	}
+
+	const goToRoulette = async (rouletteId: string) => {
+		goTo(`${ROULETTE_PAGE_ROUTE}/${rouletteId}`)
+	}
+
 	const remove = async (): Promise<void> => {
 		await deleteGroup()
 		goTo(HOME_ROUTE)
 	}
+
 	return (
 		<Section>
 			<Article>
@@ -54,38 +69,73 @@ export function GroupDetail({ id }: GroupDetailProps) {
 								showDeleteButton={!!group.name}
 							/>
 						</Header>
-						<section>
-							<header><h4>Members</h4></header>
-							<Ul className="list">
-								{ group.members.map((member, index) =>
-									<li key={index}>
-										<InputText
-											value={member}
-											name={'member_' + index}
-											placeholder={member}
-											showDeleteButton={true}
-											onChange={(newName) => editMember(index, newName)}
-											onDelete={() => deleteMember(index)}
-										/>
+						<Content>
+							<section>
+								<header><h4>Members</h4></header>
+								<Ul className="list">
+									{ group.members.map((member, index) =>
+										<li key={index}>
+											<InputText
+												value={member}
+												name={'member_' + index}
+												placeholder={member}
+												showDeleteButton={true}
+												onChange={(newName) => editMember(index, newName)}
+												onDelete={() => deleteMember(index)}
+											/>
+										</li>
+									)}
+									<li>
+										{
+											showAddMember 
+												? <InputText
+													modeEditDefault={true}
+													value={""}
+													name="newMember"
+													placeholder="New member"
+													onChange={addNewMember}
+												/>
+												: <New onClick={() => setShowAddMember(true)}>
+													Add new member
+												</New>
+										}
 									</li>
-								)}
-								<li>
+								</Ul>
+							</section>
+							<section>
+								<header><h4>Roulettes</h4></header>
+								<Ul className="list">
+									{ group.roulettes.map((roulette) =>
+										<li key={roulette.id} onClick={() => goToRoulette(roulette.id)}>
+											<InputText
+												value={roulette.name}
+												name={'roulette_' + roulette.name}
+												placeholder={roulette.name}
+												showDeleteButton={true}
+												onChange={(newName) => editRoulette(roulette.id, newName)}
+												onDelete={() => deleteRoulette(roulette.id)}
+												onClickDuringText={() => goToRoulette(roulette.id)}
+											/>
+										</li>
+									)}
+									<li>
 									{
-										showAddMember 
+										showAddRoulette
 											? <InputText
 												modeEditDefault={true}
 												value={""}
-												name="newMember"
-												placeholder="New member"
-												onChange={addNewMember}
+												name="newSoulette"
+												placeholder="New roulette name"
+												onChange={addNewRoulette}
 											/>
-											: <New onClick={() => setShowAddMember(true)}>
+											: <New onClick={() => setShowAddRoulette(true)}>
 												Add new member
 											</New>
-									}
-								</li>
-							</Ul>
-						</section>
+										}
+									</li>
+								</Ul>
+							</section>
+						</Content>
 					</Fragment>
 				)}
 			</Article>
@@ -94,16 +144,23 @@ export function GroupDetail({ id }: GroupDetailProps) {
 	)
 }
 
+const Content = styled.div`
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+`
+
 const Section = styled.section`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-center;
+	justify-content: center;
 `
 
 const Article = styled.article`
 	margin: 8px;
 	max-width: 500px;
+	width: 100%;
 `
 
 const Header = styled.header`

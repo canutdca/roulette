@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
-export class GroupMember {
+export class GroupRoulette
+ {
 	#id: string
 	get id(): string {
 		return this.#id
@@ -14,8 +15,8 @@ export class GroupMember {
 		this.#name = value
 	}
 
-	constructor(name: string) {
-		this.#id = uuidv4()
+	constructor(id: string = '', name: string = '') {
+		this.#id = id || uuidv4()
 		this.#name = name
 	}
 }

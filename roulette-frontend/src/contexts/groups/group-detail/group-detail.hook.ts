@@ -44,7 +44,6 @@ export function useGroupDetail(id: string | undefined) {
 		const groupUpdating = group!.clone()
 		try {
 			groupUpdating.editMember(indexMember, editedMember)
-			console.log(groupUpdating)
 			setGroup(groupUpdating)
 			return saveGroupApi(groupUpdating)
 		} catch (error: any) {
@@ -56,7 +55,43 @@ export function useGroupDetail(id: string | undefined) {
 		const groupUpdating = group!.clone()
 		try {
 			groupUpdating.deleteMember(indexMember)
-			console.log(groupUpdating)
+			setGroup(groupUpdating)
+			return saveGroupApi(groupUpdating)
+		} catch (error: any) {
+			return error.message
+		}
+	}
+
+	const addRoulette = async (newRoulleteName: string): Promise<string> => {
+		if (!newRoulleteName) return Promise.resolve('')
+		const groupUpdating = group!.clone()
+		try {
+			const newRouletteId = groupUpdating.addRoulette(newRoulleteName)
+			setGroup(groupUpdating)
+			await saveGroupApi(groupUpdating)
+			return newRouletteId
+		} catch (error: any) {
+			return error.message
+		}
+	}
+
+	const editRoulette = async (rouletteId: string, editedRouletteName: string): Promise<void> => {
+		debugger
+		if (!editedRouletteName) return Promise.resolve()
+		const groupUpdating = group!.clone()
+		try {
+			groupUpdating.editRoulette(rouletteId, editedRouletteName)
+			setGroup(groupUpdating)
+			return saveGroupApi(groupUpdating)
+		} catch (error: any) {
+			return error.message
+		}
+	}
+	
+	const deleteRoulette = async (rouletteId: string): Promise<void> => {
+		const groupUpdating = group!.clone()
+		try {
+			groupUpdating.deleteRoulette(rouletteId)
 			setGroup(groupUpdating)
 			return saveGroupApi(groupUpdating)
 		} catch (error: any) {
@@ -71,6 +106,9 @@ export function useGroupDetail(id: string | undefined) {
 		deleteGroup,
 		addMember,
 		editMember,
-		deleteMember
+		deleteMember,
+		addRoulette,
+		editRoulette,
+		deleteRoulette
 	}
 }

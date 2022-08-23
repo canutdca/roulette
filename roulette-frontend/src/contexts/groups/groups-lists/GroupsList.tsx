@@ -57,7 +57,7 @@ const Section = styled.section`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-center;
+	justify-content: center;
 `
 
 const Article = styled.article`

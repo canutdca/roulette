@@ -10,6 +10,7 @@ interface RInputTextProps {
 	showDeleteButton?: boolean
 	onChange: (newName: string) => Promise<void>
 	onDelete?: () => Promise<void>
+	onClickDuringText?: () => Promise<void>
 }
 
 export function InputText({
@@ -20,7 +21,8 @@ export function InputText({
 	style = 'simple',
 	showDeleteButton = false,
 	onChange,
-	onDelete
+	onDelete,
+	onClickDuringText = () => Promise.resolve()
 }: RInputTextProps) {
 
 	const [inputValue, setInputValue] = useState(value)
@@ -69,7 +71,7 @@ export function InputText({
 
 	const renderModeView = () => (
 		<Div genericStyles={genericStyle}>
-			{value}
+			<span onClick={onClickDuringText}>{value}</span>
 			<button onClick={edit}>Edit</button>
 		</Div>
 	)
