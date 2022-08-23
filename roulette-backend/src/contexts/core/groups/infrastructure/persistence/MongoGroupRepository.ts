@@ -1,5 +1,5 @@
 import { MongoRepository } from '../../../../_shared/infrastructure/persistence/mongo/MongoRepository'
-import { GroupId } from '../../../_shared/domain/Groups/GroupId'
+import { GroupId } from '../../../_shared/domain/groups/GroupId'
 import { Group } from '../../domain/Group'
 import { GroupRepository } from '../../domain/GroupRepository'
 
@@ -7,6 +7,7 @@ interface GroupDocument {
 	_id: string
 	name: string
 	members: string[]
+	roulettes: { id: string, name: string }[]
 }
 
 export class MongoGroupRepository extends MongoRepository<Group> implements GroupRepository {
@@ -16,7 +17,7 @@ export class MongoGroupRepository extends MongoRepository<Group> implements Grou
 		const documents = await collection.find<GroupDocument>({}).toArray()
 
 		return documents.map(document =>
-			Group.fromPrimitives({ name: document.name, id: document._id, members: document.members }))
+			Group.fromPrimitives({ name: document.name, id: document._id, members: document.members, roulettes: document.roulettes }))
 	}
 
 	async getSingle(id: GroupId): Promise<Group | null> {
@@ -25,7 +26,7 @@ export class MongoGroupRepository extends MongoRepository<Group> implements Grou
 
 		if (!document) return null
 
-		return Group.fromPrimitives({ name: document.name, id: document._id, members: document.members })
+		return Group.fromPrimitives({ name: document.name, id: document._id, members: document.members, roulettes: document.roulettes })
 	}
 
 	save(group: Group): Promise<void> {

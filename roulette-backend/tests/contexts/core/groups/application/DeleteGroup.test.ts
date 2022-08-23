@@ -17,7 +17,7 @@ describe('DeleteGroup', () => {
 	it('work correct if the group already exist', async () => {
 		const group = GroupMother.random();
 		repository.save(group);
-
+		
 		const request = DeleteGroupRequestMother.create(group.id)
 		await service.run(request)
 

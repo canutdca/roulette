@@ -14,7 +14,8 @@ export class GetGroups {
 			list: groups.map(group => ({
 				id: group.id.value,
 				name: group.name.value,
-				members: group.members.map(member => member.value)
+				members: group.members.map(member => member.value),
+				roulettes: group.roulettes.map(roulette => ({id: roulette.id.value, name: roulette.name.value }))
 			}))
 		}
 	}

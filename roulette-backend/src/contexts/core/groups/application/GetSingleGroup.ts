@@ -1,7 +1,7 @@
 import { GroupRepository } from '../domain/GroupRepository'
 import { GetSingleGroupResponse } from './GetSingleGroupResponse'
 import { GetSingleGroupRequest } from './GetSingleGroupRequest'
-import { GroupId } from '../../_shared/domain/Groups/GroupId'
+import { GroupId } from '../../_shared/domain/groups/GroupId'
 
 export class GetSingleGroup {
 	private readonly repository: GroupRepository
@@ -16,7 +16,8 @@ export class GetSingleGroup {
 		return {
 			id: group.id.value,
 			name: group.name.value,
-			members: group.members.map(member => member.value)
+			members: group.members.map(member => member.value),
+			roulettes: group.roulettes.map(roulette => ({id: roulette.id.value, name: roulette.name.value }))
 		}
 	}
 }

@@ -2,7 +2,10 @@ import { CreateGroup } from '../../../../../src/contexts/core/groups/application
 import { Group } from '../../../../../src/contexts/core/groups/domain/Group'
 import { GroupMember } from '../../../../../src/contexts/core/groups/domain/GroupMember'
 import { GroupName } from '../../../../../src/contexts/core/groups/domain/GroupName'
-import { GroupId } from '../../../../../src/contexts/core/_shared/domain/Groups/GroupId'
+import { GroupRoulette } from '../../../../../src/contexts/core/groups/domain/GroupRoulette'
+import { GroupRouletteId } from '../../../../../src/contexts/core/groups/domain/GroupRouletteId'
+import { GroupRouletteName } from '../../../../../src/contexts/core/groups/domain/GroupRouletteName'
+import { GroupId } from '../../../../../src/contexts/core/_shared/domain/groups/GroupId'
 import { GroupRepositoryMock } from '../__mocks__/GroupRepositoryMock'
 import { CreateGroupRequestMother } from './CreateGroupRequestMother'
 
@@ -22,7 +25,8 @@ describe('CreateGroup', () => {
 		const expectedGroup = new Group(
 			new GroupId(request.id),
 			new GroupName(request.name),
-			request.members?.map(member => new GroupMember(member)) || []
+			request.members?.map(member => new GroupMember(member)) || [],
+			request.roulettes?.map(roulette => new GroupRoulette(new GroupRouletteId(roulette.id), new GroupRouletteName(roulette.name))) || []
 		)
 		repository.assertLastSavedGroupIs(expectedGroup)
 	})

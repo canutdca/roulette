@@ -1,4 +1,4 @@
-import { GroupId } from '../../_shared/domain/Groups/GroupId'
+import { GroupId } from '../../_shared/domain/groups/GroupId'
 import { Group } from './Group'
 
 export interface GroupRepository {

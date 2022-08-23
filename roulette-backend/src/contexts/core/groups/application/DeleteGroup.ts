@@ -1,6 +1,6 @@
 import { GroupRepository } from '../domain/GroupRepository'
 import { DeleteGroupRequest } from './DeleteGroupRequest'
-import { GroupId } from '../../_shared/domain/Groups/GroupId'
+import { GroupId } from '../../_shared/domain/groups/GroupId'
 import { PeristenceErrorBecauseNotExist } from '../../../_shared/infrastructure/persistence/persistence-errors'
 import { ErrorToDelete } from './delete-group-errors'
 export class DeleteGroup {
