@@ -17,9 +17,9 @@ export const httpPutOrPost = async <T>(path: string, objectToSave: Saveable): Pr
 	try {
 		const response = await fetch(basePath + path, {
 			method: 'PUT',
-			body: new URLSearchParams(objectToSave.toPrimitives()),
+			body: JSON.stringify(objectToSave.toPrimitives()),
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				'Content-Type': 'application/json;charset=UTF-8'
 			}
 		})
 		console.log('response', response)

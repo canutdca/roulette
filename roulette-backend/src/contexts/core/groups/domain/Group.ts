@@ -29,8 +29,8 @@ export class Group extends AggregateRoot {
 		return new Group(
 			new GroupId(plainData.id),
 			new GroupName(plainData.name),
-			plainData.members.map(member => new GroupMember(member)),
-			plainData.roulettes.map(roulette => new GroupRoulette(new GroupRouletteId(roulette.id), new GroupRouletteName(roulette.name)))
+			plainData.members?.map(member => new GroupMember(member)),
+			plainData.roulettes?.map(roulette => new GroupRoulette(new GroupRouletteId(roulette.id), new GroupRouletteName(roulette.name)))
 		)
 	}
 

@@ -58,7 +58,7 @@ export function GroupDetail({ id }: GroupDetailProps) {
 							<header><h4>Members</h4></header>
 							<Ul className="list">
 								{ group.members.map((member, index) =>
-									<li>
+									<li key={index}>
 										<InputText
 											value={member}
 											name={'member_' + index}

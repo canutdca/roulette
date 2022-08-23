@@ -27,7 +27,6 @@ export function useGroupDetail(id: string | undefined) {
 	}
 
 	const addMember = async (newMember: string): Promise<void> => {
-		debugger
 		if (!newMember) return Promise.resolve()
 		const groupUpdating = group!.clone()
 		try {
@@ -41,7 +40,6 @@ export function useGroupDetail(id: string | undefined) {
 	}
 
 	const editMember = async (indexMember: number, editedMember: string): Promise<void> => {
-		debugger
 		if (!editedMember) return Promise.resolve()
 		const groupUpdating = group!.clone()
 		try {
