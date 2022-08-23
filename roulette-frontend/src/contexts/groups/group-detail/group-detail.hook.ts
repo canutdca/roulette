@@ -23,13 +23,56 @@ export function useGroupDetail(id: string | undefined) {
 	}
 
 	const deleteGroup = async (): Promise<void> => {
-		await deleteGroupApi(id!)
+		await deleteGroupApi(group!.id)
+	}
+
+	const addMember = async (newMember: string): Promise<void> => {
+		debugger
+		if (!newMember) return Promise.resolve()
+		const groupUpdating = group!.clone()
+		try {
+			groupUpdating.addMember(newMember)
+			console.log(groupUpdating)
+			setGroup(groupUpdating)
+			return saveGroupApi(groupUpdating)
+		} catch (error: any) {
+			return error.message
+		}
+	}
+
+	const editMember = async (indexMember: number, editedMember: string): Promise<void> => {
+		debugger
+		if (!editedMember) return Promise.resolve()
+		const groupUpdating = group!.clone()
+		try {
+			groupUpdating.editMember(indexMember, editedMember)
+			console.log(groupUpdating)
+			setGroup(groupUpdating)
+			return saveGroupApi(groupUpdating)
+		} catch (error: any) {
+			return error.message
+		}
+	}
+
+	const deleteMember = async (indexMember: number): Promise<void> => {
+		const groupUpdating = group!.clone()
+		try {
+			groupUpdating.deleteMember(indexMember)
+			console.log(groupUpdating)
+			setGroup(groupUpdating)
+			return saveGroupApi(groupUpdating)
+		} catch (error: any) {
+			return error.message
+		}
 	}
 
 	return {
 		group,
 		getGroup,
 		setGroupName,
-		deleteGroup
+		deleteGroup,
+		addMember,
+		editMember,
+		deleteMember
 	}
 }

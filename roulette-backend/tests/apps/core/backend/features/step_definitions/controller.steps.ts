@@ -17,12 +17,15 @@ Given('a course with id {string} already exists', async (id: string) => {
 })
 
 When('I send a GET request to {string}', (route: string) => {
-	const test = request(application.httpServer)
-	_request = test.get(route)
+	_request = request(application.httpServer).get(route)
 })
 
 When('I send a PUT request to {string} with body:', (route: string, body: string) => {
 	_request = request(application.httpServer).put(route).send(JSON.parse(body))
+})
+
+When('I send a DELETE request to {string}', (route: string) => {
+	_request = request(application.httpServer).delete(route)
 })
 
 Then('the response status code should be {int}', async (statusCode: number) => {

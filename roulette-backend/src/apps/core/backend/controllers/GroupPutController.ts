@@ -8,7 +8,7 @@ export class GroupPutController implements Controller {
 
 	async run(req: Request, res: Response) {
 		const { id, name, members } = req.body
-		await this.createGroup.run({id, name, members})
+		await this.createGroup.run({id, name, members: (members as string).split(',')})
 
 		res.status(httpStatus.OK).send()
 	}

@@ -2,13 +2,26 @@ import styled from '@emotion/styled'
 import { useState, useEffect } from 'react'
 
 interface RInputTextProps {
-	modeEditDefault: true | false
+	modeEditDefault?: true | false
 	value: string
-	onChange: (newName: string) => Promise<void>
+	name: string
+	placeholder: string
 	style?: 'title' | 'simple'
+	showDeleteButton?: boolean
+	onChange: (newName: string) => Promise<void>
+	onDelete?: () => Promise<void>
 }
 
-export function InputText({ modeEditDefault = false, value, style = 'simple', onChange }: RInputTextProps) {
+export function InputText({
+	modeEditDefault = false,
+	value,
+	name,
+	placeholder,
+	style = 'simple',
+	showDeleteButton = false,
+	onChange,
+	onDelete
+}: RInputTextProps) {
 
 	const [inputValue, setInputValue] = useState(value)
 	const [modeEdit, setmodeEdit] = useState(modeEditDefault)
@@ -37,28 +50,35 @@ export function InputText({ modeEditDefault = false, value, style = 'simple', on
 		}
 	}
 
-	if (modeEdit) return (
+	const renderModeEdit = () => (
 		<form onSubmit={submitForm}>
 			<Label htmlFor='groupName'>Name</Label>
 			<Input
 				genericStyles={genericStyle}
 				type='text'
-				name='name'
-				id='groupName'
+				name={name}
 				value={inputValue}
 				onChange={changeInput}
-				placeholder='Group name'
+				placeholder={placeholder}
 				autoFocus
 			/>
 			<input type='submit' formAction='1' name='save' value='Save' />
-			<input type='submit' formAction='2' name='undo' value='Undo' />
+			{!!value && <input type='submit' formAction='2' name='undo' value='Undo' />}
 		</form>
 	)
-	return (
+
+	const renderModeView = () => (
 		<Div genericStyles={genericStyle}>
 			{value}
 			<button onClick={edit}>Edit</button>
 		</Div>
+	)
+
+	return (
+		<Container>
+			{ modeEdit ? renderModeEdit() : renderModeView() }
+			{ showDeleteButton && <button onClick={onDelete}>Delete</button> }
+		</Container>
 	)
 }
 
@@ -81,3 +101,8 @@ const Input = styled.input<GenericStylesProps>`
 const Div = styled.div<GenericStylesProps>`${(props: GenericStylesProps) => props.genericStyles}`
 
 const ErrorMsg = styled.span``
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: row;
+`

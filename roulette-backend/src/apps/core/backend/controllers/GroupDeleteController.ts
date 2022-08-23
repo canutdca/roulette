@@ -11,7 +11,7 @@ export class GroupDeleteController implements Controller {
 		const { id } = req.params
 		try {
 			await this.deleteGroup.run({id})
-			res.status(httpStatus.NO_CONTENT).send()
+			res.status(httpStatus.OK).send()
 		} catch (error) {
 			if (error instanceof ErrorToDelete)
 				res.status(httpStatus.BAD_REQUEST).send()

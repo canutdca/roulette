@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useNavigation } from '_core/hooks/useNavigation'
 import { InputText } from '_shared/components/InputText'
 import { HOME_ROUTE } from '../../../routes'
@@ -17,11 +17,21 @@ export function GroupDetail({ id }: GroupDetailProps) {
 		getGroup,
 		setGroupName,
 		deleteGroup,
+		addMember,
+		editMember,
+		deleteMember
 	} = useGroupDetail(id)
+
+	const [showAddMember, setShowAddMember] = useState<boolean>(false)
 
 	useEffect(() => {
 		getGroup()
 	}, [])
+
+	const addNewMember = async (newMember: string) => {
+		await addMember(newMember)
+		setShowAddMember(false)
+	}
 
 	const remove = async (): Promise<void> => {
 		await deleteGroup()
@@ -36,12 +46,46 @@ export function GroupDetail({ id }: GroupDetailProps) {
 							<InputText
 								modeEditDefault={!id}
 								value={group.name}
+								name="groupName"
+								placeholder="Group name"
 								onChange={setGroupName}
+								onDelete={remove}
 								style={'title'}
+								showDeleteButton={!!group.name}
 							/>
-							<Delete onClick={remove}>Delete</Delete>
 						</Header>
-						<span>contenido</span>
+						<section>
+							<header><h4>Members</h4></header>
+							<Ul className="list">
+								{ group.members.map((member, index) =>
+									<li>
+										<InputText
+											value={member}
+											name={'member_' + index}
+											placeholder={member}
+											showDeleteButton={true}
+											onChange={(newName) => editMember(index, newName)}
+											onDelete={() => deleteMember(index)}
+										/>
+									</li>
+								)}
+								<li>
+									{
+										showAddMember 
+											? <InputText
+												modeEditDefault={true}
+												value={""}
+												name="newMember"
+												placeholder="New member"
+												onChange={addNewMember}
+											/>
+											: <New onClick={() => setShowAddMember(true)}>
+												Add new member
+											</New>
+									}
+								</li>
+							</Ul>
+						</section>
 					</Fragment>
 				)}
 			</Article>
@@ -68,10 +112,20 @@ const Header = styled.header`
 	justify-content: space-between;
 `
 
-const Delete = styled.button`
-
-`
-
 const H1 = styled.h1`
 	margin: 8px;
+`
+
+const Ul = styled.ul`
+	margin-block: 0;
+	padding-inline: 0;
+	margin-inline: 0;
+	list-style: none;
+`
+
+const New = styled.span`
+	cursor: default;
+	&:hover {
+		color: red;
+	}
 `

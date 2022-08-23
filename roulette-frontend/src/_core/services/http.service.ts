@@ -15,7 +15,6 @@ export const httpGet = async <T>(path: string): Promise<T> => {
 
 export const httpPutOrPost = async <T>(path: string, objectToSave: Saveable): Promise<void> => {
 	try {
-		console.log('fetch', objectToSave.toPrimitives())
 		const response = await fetch(basePath + path, {
 			method: 'PUT',
 			body: new URLSearchParams(objectToSave.toPrimitives()),

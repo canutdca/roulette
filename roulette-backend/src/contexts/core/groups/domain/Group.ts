@@ -12,7 +12,7 @@ export class Group extends AggregateRoot {
 		super()
 		this.id = id
 		this.name = name
-		this.members = []
+		this.members = members
 	}
 
 	static fromPrimitives(plainData: {
