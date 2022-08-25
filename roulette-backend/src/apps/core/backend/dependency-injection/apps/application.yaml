@@ -22,6 +22,15 @@ services:
     class: ../../controllers/RoulettesGetController
     arguments: ['@Core.roulettes.application.GetRoulettes']
 
+  Apps.core.controllers.RouletteGetController:
+    class: ../../controllers/RouletteGetController
+    arguments: ['@Core.roulettes.application.GetSingleRoulette']
+
   Apps.core.controllers.RoulettePutController:
     class: ../../controllers/RoulettePutController
     arguments: ['@Core.roulettes.application.CreateRoulette']
+
+  Apps.core.controllers.RouletteDeleteController:
+    class: ../../controllers/RouletteDeleteController
+    arguments: ['@Core.roulettes.application.DeleteRoulette']
+

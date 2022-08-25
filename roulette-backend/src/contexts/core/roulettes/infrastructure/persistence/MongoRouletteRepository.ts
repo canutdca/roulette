@@ -5,6 +5,7 @@ import { RouletteRepository } from '../../domain/RouletteRepository'
 
 interface RouletteDocument {
 	_id: string
+	groupId: string
 	name: string
 	members: { name: string, strikethrough: boolean }[]
 	current: string
@@ -16,7 +17,7 @@ export class MongoRouletteRepository extends MongoRepository<Roulette> implement
 		const documents = await collection.find<RouletteDocument>({}).toArray()
 
 		return documents.map(document =>
-			Roulette.fromPrimitives({ name: document.name, id: document._id, members: document.members, current: document.current }))
+			Roulette.fromPrimitives({ name: document.name, id: document._id, groupId: document.groupId, members: document.members, current: document.current }))
 	}
 
 	async getSingle(id: RouletteId): Promise<Roulette | null> {
@@ -25,7 +26,7 @@ export class MongoRouletteRepository extends MongoRepository<Roulette> implement
 
 		if (!document) return null
 
-		return Roulette.fromPrimitives({ name: document.name, id: document._id, members: document.members, current: document.current })
+		return Roulette.fromPrimitives({ name: document.name, id: document._id, groupId: document.groupId, members: document.members, current: document.current })
 	}
 
 	save(roulette: Roulette): Promise<void> {

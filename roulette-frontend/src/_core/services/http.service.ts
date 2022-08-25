@@ -22,7 +22,6 @@ export const httpPutOrPost = async <T>(path: string, objectToSave: Saveable): Pr
 				'Content-Type': 'application/json;charset=UTF-8'
 			}
 		})
-		console.log('response', response)
 		if (!response.ok) throw new HttpError(response.statusText)
 	} catch (err) {
 		alert(err)

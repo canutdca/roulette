@@ -30,10 +30,17 @@ export class CreateGroup {
 
 		await Promise.all([
 			this.repository.save(group),
-			originalGroup && this.getRoulettesToSave(originalGroup.roulettes, group.roulettes)
-				.map(groupRoulette => this.createRoulette.create(groupRoulette.id.value, groupRoulette.name.value))
+			originalGroup
+				&& this.getRoulettesToSave(originalGroup.roulettes, group.roulettes)
+					.map(groupRoulette =>
+						this.createRoulette.create(
+							groupRoulette.id.value,
+							group.id.value,
+							groupRoulette.name.value,
+							group.members.map(member => member.value)
+						)
+					)
 		])
-
 		// TODO: do this with a command bus or similar for save the roulettes
 	}
 

@@ -1,8 +1,4 @@
-export interface GetRoulettesResponse {
-	list: RouletteResponse[]
-}
-
-export interface RouletteResponse {
+export interface GetSingleRouletteResponse {
 	id: string
 	groupId: string
 	name: string

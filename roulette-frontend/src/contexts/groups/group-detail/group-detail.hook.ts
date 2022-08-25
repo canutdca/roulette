@@ -31,7 +31,6 @@ export function useGroupDetail(id: string | undefined) {
 		const groupUpdating = group!.clone()
 		try {
 			groupUpdating.addMember(newMember)
-			console.log(groupUpdating)
 			setGroup(groupUpdating)
 			return saveGroupApi(groupUpdating)
 		} catch (error: any) {
@@ -76,7 +75,6 @@ export function useGroupDetail(id: string | undefined) {
 	}
 
 	const editRoulette = async (rouletteId: string, editedRouletteName: string): Promise<void> => {
-		debugger
 		if (!editedRouletteName) return Promise.resolve()
 		const groupUpdating = group!.clone()
 		try {

@@ -53,8 +53,6 @@ export class Group implements Saveable, Cloneable<Group> {
 	}
 
 	editRoulette(rouletteId: string, newNameMember: string) {
-		console.log(this.#roulettes)
-		console.log(rouletteId)
 		const asd = this.#roulettes.find(roulette => roulette.id === rouletteId)
 		asd!.name = newNameMember
 	}

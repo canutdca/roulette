@@ -7,8 +7,8 @@ export class RoulettePutController implements Controller {
 	constructor(private createRoulette: CreateRoulette) {}
 
 	async run(req: Request, res: Response) {
-		const { id, name } = req.body
-		await this.createRoulette.run({id, name })
+		const { id, name, groupId, members, current } = req.body
+		await this.createRoulette.run({id, name, groupId, members, current })
 
 		res.status(httpStatus.OK).send()
 	}
