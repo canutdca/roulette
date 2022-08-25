@@ -14,6 +14,10 @@ services:
     class: ../../../../../contexts/core/groups/infrastructure/persistence/MongoGroupRepository
     arguments: ['@Core.ConnectionManager']
 
+  Core.groups.domain.CreateRoulette:
+    class: ../../../../../contexts/core/groups/infrastructure/CreateRouletteApplication
+    arguments: ['@Core.roulettes.application.CreateRouletteFromGroup']
+
   Core.groups.application.GetGroups:
     class: ../../../../../contexts/core/groups/application/GetGroups
     arguments: ['@Core.groups.domain.GroupRepository']
@@ -24,7 +28,7 @@ services:
 
   Core.groups.application.CreateGroup:
     class: ../../../../../contexts/core/groups/application/CreateGroup
-    arguments: ['@Core.groups.domain.GroupRepository']
+    arguments: ['@Core.groups.domain.GroupRepository', '@Core.groups.domain.CreateRoulette']
 
   Core.groups.application.DeleteGroup:
     class: ../../../../../contexts/core/groups/application/DeleteGroup

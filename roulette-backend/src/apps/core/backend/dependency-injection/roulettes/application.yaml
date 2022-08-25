@@ -1,0 +1,24 @@
+services:
+  Core.MongoConfig:
+    factory:
+      class: ../../../../../contexts/core/_shared/infrastructure/persistence/mongo/MongoConfigFactory
+      method: 'createConfig'
+
+  Core.ConnectionManager:
+    factory:
+      class: ../../../../../contexts/_shared/infrastructure/persistence/mongo/MongoClientFactory
+      method: 'createClient'
+    arguments: ['core', '@Core.MongoConfig']
+
+  Core.roulettes.domain.RouletteRepository:
+    class: ../../../../../contexts/core/roulettes/infrastructure/persistence/MongoRouletteRepository
+    arguments: ['@Core.ConnectionManager']
+
+  Core.roulettes.application.GetRoulettes:
+    class: ../../../../../contexts/core/roulettes/application/GetRoulettes
+    arguments: ['@Core.roulettes.domain.RouletteRepository']
+
+  Core.roulettes.application.CreateRouletteFromGroup:
+    class: ../../../../../contexts/core/roulettes/application/CreateRouletteFromGroup
+    arguments: ['@Core.roulettes.domain.RouletteRepository']
+

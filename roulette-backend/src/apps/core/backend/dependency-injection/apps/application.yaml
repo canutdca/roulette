@@ -1,5 +1,6 @@
 services:
 
+  # Groups:
   Apps.core.controllers.GroupsGetController:
     class: ../../controllers/GroupsGetController
     arguments: ['@Core.groups.application.GetGroups']
@@ -15,3 +16,12 @@ services:
   Apps.core.controllers.GroupDeleteController:
     class: ../../controllers/GroupDeleteController
     arguments: ['@Core.groups.application.DeleteGroup']
+
+  # Roulettes:
+  Apps.core.controllers.RoulettesGetController:
+    class: ../../controllers/RoulettesGetController
+    arguments: ['@Core.roulettes.application.GetRoulettes']
+
+  Apps.core.controllers.RoulettePutController:
+    class: ../../controllers/RoulettePutController
+    arguments: ['@Core.roulettes.application.CreateRoulette']
