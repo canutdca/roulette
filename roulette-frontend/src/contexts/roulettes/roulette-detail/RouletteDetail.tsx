@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useNavigation } from '_core/hooks/useNavigation'
 import { InputText } from '_shared/components/InputText'
 import { GROUP_PAGE_ROUTE } from '../../../routes/index';
+import { ModalToConfirm } from './ModalToConfirm';
 import { useRouletteDetail } from './roulette-detail.hook';
 
 export interface RouletteDetailProps {
@@ -12,21 +13,42 @@ export function RouletteDetail({ id }: RouletteDetailProps) {
 
 	const { goTo } = useNavigation()
 
-	const { roulette, getRoulette, setRouletteName, deleteRoulette, setActiveMember, setStrikethroughMember, play } = useRouletteDetail(id)
+	const {
+		roulette,
+		rouletteAfterPlayBeforeConfirm,
+		getRoulette,
+		setRouletteName,
+		setActiveMember,
+		setStrikethroughMember,
+		play,
+		confirm,
+		cancelPlay,
+		reset
+	} = useRouletteDetail(id)
 
 	useEffect(() => {
 		getRoulette()
 	}, [])
 
-	const remove = async (): Promise<void> => {
-		const groupId = roulette!.groupId
-		await deleteRoulette()
-		goTo(`${GROUP_PAGE_ROUTE}/${groupId}`)
-	}
+	const back = (groupId: string): void => goTo(`${GROUP_PAGE_ROUTE}/${groupId}`)
 
 	const toggleMember = async (isStrikethrough: boolean, index: number): Promise<void> =>
 		isStrikethrough ? await setActiveMember(index) : await setStrikethroughMember(index)
 
+	const renderPlay = () => (
+		<>
+		<button onClick={play}>PLAY</button>
+		{rouletteAfterPlayBeforeConfirm && rouletteAfterPlayBeforeConfirm.candidateToCurrent}
+		{ rouletteAfterPlayBeforeConfirm &&
+			<ModalToConfirm
+				candidateName={rouletteAfterPlayBeforeConfirm.candidateToCurrent!}
+				confirm={confirm}
+				cancel={cancelPlay}
+			/> }
+		</>
+	)
+
+	const renderReset = () => <button onClick={reset}>RESET</button>
 	return (
 		<Section>
 			<Article>
@@ -39,10 +61,10 @@ export function RouletteDetail({ id }: RouletteDetailProps) {
 								name="rouletteName"
 								placeholder="Roulette name"
 								onChange={setRouletteName}
-								onDelete={remove}
 								style={'title'}
-								showDeleteButton={true}
+								showDeleteButton={false}
 							/>
+							<Back onClick={() => back(roulette.groupId)}>Back to group</Back>
 						</Header>
 						<Content>
 							<section>
@@ -57,7 +79,11 @@ export function RouletteDetail({ id }: RouletteDetailProps) {
 							</section>
 							<section>
 								<header><h4>Roulette</h4></header>
-								<button onClick={play}>PLAY</button>
+								{ roulette.current && <h3>Current: {roulette.current}</h3> }
+								{
+									roulette.availableToPlay ? renderPlay() : renderReset()
+								}
+								
 							</section>
 						</Content>
 					</Fragment>
@@ -97,6 +123,10 @@ const Header = styled.header`
 	margin: 8px;
 	display: flex;
 	justify-content: space-between;
+`
+
+const Back = styled.div`
+	color: blue;
 `
 
 const H1 = styled.h1`

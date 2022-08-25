@@ -42,7 +42,7 @@ export class Roulette extends AggregateRoot {
 			groupId: this.groupId.value,
 			name: this.name.value,
 			members: this.members.map(member => ({name: member.name.value, strikethrough: member.strikethrough.value})),
-            current: this.current?.value
+            current: this.current ? this.current.value : null
 		}
 	}
 }

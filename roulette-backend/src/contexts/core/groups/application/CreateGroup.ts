@@ -8,14 +8,21 @@ import { GroupRoulette } from '../domain/GroupRoulette'
 import { GroupRouletteName } from '../domain/GroupRouletteName'
 import { GroupRouletteId } from '../domain/GroupRouletteId'
 import { CreateRoulette } from '../domain/CreateRoulette'
+import { DeleteRoulette } from '../domain/DeleteRoulette'
 
 export class CreateGroup {
 	private readonly repository: GroupRepository
 	private readonly createRoulette: CreateRoulette
+	private readonly deleteRoulette: DeleteRoulette
 
-	constructor(repository: GroupRepository, createRoulette: CreateRoulette ) {
+	constructor(
+		repository: GroupRepository,
+		createRoulette: CreateRoulette,
+		deleteRoulette: DeleteRoulette
+	) {
 		this.repository = repository
 		this.createRoulette = createRoulette
+		this.deleteRoulette = deleteRoulette
 	}
 
 	async run(request: CreateGroupRequest): Promise<void> {
@@ -39,7 +46,10 @@ export class CreateGroup {
 							groupRoulette.name.value,
 							group.members.map(member => member.value)
 						)
-					)
+					),
+			originalGroup
+				&& this.getRoulettesToDelete(originalGroup.roulettes, group.roulettes)
+					.map(groupRoulette => this.deleteRoulette.delete(groupRoulette.id.value))
 		])
 		// TODO: do this with a command bus or similar for save the roulettes
 	}
@@ -56,5 +66,13 @@ export class CreateGroup {
 		})
 
 		return rouletesToSave
+	}
+
+	private getRoulettesToDelete(originalRoulettes: GroupRoulette[], newRoulettes: GroupRoulette[]): GroupRoulette[] {
+		const rouletesToDelete: GroupRoulette[] = originalRoulettes.reduce((acc: GroupRoulette[], el) => {
+			if (newRoulettes.some(newRoulette => newRoulette.id === el.id)) return acc
+			return [...acc, el]
+		}, [])
+		return rouletesToDelete
 	}
 }

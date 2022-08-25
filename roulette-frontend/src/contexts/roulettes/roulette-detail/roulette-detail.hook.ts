@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Roulette } from '../domain/roulette.model'
-import { deleteRouletteApi, getRouletteApi, saveRouletteApi } from './groups-detail-api.service'
+import { getRouletteApi, saveRouletteApi } from './groups-detail-api.service'
 
 export function useRouletteDetail(id: string) {
 
 	const [roulette, setRoulette] = useState<Roulette>()
+	const [rouletteAfterPlayBeforeConfirm, setRouletteAfterPlayBeforeConfirm] = useState<Roulette | null>(null)
+
 	const getRoulette = async () => {
 		setRoulette(await getRouletteApi(id))
 	}
@@ -21,10 +23,6 @@ export function useRouletteDetail(id: string) {
 		}
 	}
 
-	const deleteRoulette = async (): Promise<void> => {
-		await deleteRouletteApi(roulette!.id)
-	}
-
 	const setStrikethroughMember = async (index: number): Promise<void> => {
 		const rouletteUpdating = roulette!.clone()
 		rouletteUpdating!.setStrikethroughMember(index)
@@ -38,16 +36,42 @@ export function useRouletteDetail(id: string) {
 		await saveRouletteApi(rouletteUpdating)
 	}
 
-	const play = (): void => roulette!.play()
+	const play = (): void => {
+		const roulettePlaying = roulette!.clone()
+		roulettePlaying!.play()
+		setRouletteAfterPlayBeforeConfirm(roulettePlaying)
+	}
+
+	const confirm = async (): Promise<void> => {
+		rouletteAfterPlayBeforeConfirm?.confirm()
+		setRoulette(rouletteAfterPlayBeforeConfirm!)
+		setRouletteAfterPlayBeforeConfirm(null)
+		
+		await saveRouletteApi(rouletteAfterPlayBeforeConfirm!)
+	}
 	
+	const cancelPlay = (): void => {
+		setRouletteAfterPlayBeforeConfirm(null)
+	}
+
+	const reset = async (): Promise<void> => {
+		const rouletteUpdating = roulette!.clone()
+		rouletteUpdating.reset()
+		setRoulette(rouletteUpdating)
+		
+		await saveRouletteApi(rouletteUpdating)
+	}
 
 	return {
 		roulette,
+		rouletteAfterPlayBeforeConfirm,
 		getRoulette,
 		setRouletteName,
-		deleteRoulette,
 		setStrikethroughMember,
 		setActiveMember,
-		play
+		play,
+		confirm,
+		cancelPlay,
+		reset
 	}
 }

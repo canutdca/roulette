@@ -1,6 +1,7 @@
 import { RouletteMember } from './roulette-member.model'
 import { Cloneable } from 'contexts/_shared/domain/Cloneable.model'
 import { Saveable } from 'contexts/_shared/domain/Saveable.model'
+import { randomIntFromInterval } from '../../../_shared/utils/numbers.utils';
 
 export class Roulette implements Saveable, Cloneable<Roulette> {
 	#id: string
@@ -31,12 +32,22 @@ export class Roulette implements Saveable, Cloneable<Roulette> {
 		return this.#current
 	}
 
+	#candidateToCurrent: string | null
+	get candidateToCurrent(): string | null {
+		return this.#candidateToCurrent
+	}
+
+	get availableToPlay(): boolean {
+		return this.#members.some(member => !member.strikethrough)
+	}
+
 	constructor(id: string, groupId: string, name: string, members: { name: string, strikethrough: boolean }[], current: string | null) {
 		this.#id = id
 		this.#groupId = groupId
 		this.#name = name
 		this.#members = members?.map(member => new RouletteMember(member.name, member.strikethrough))
 		this.#current = current
+		this.#candidateToCurrent = null
 	}
 
 	setStrikethroughMember(index: number) {
@@ -52,7 +63,33 @@ export class Roulette implements Saveable, Cloneable<Roulette> {
 	}
 	
 	play(): void {
-		alert('plaaay')
+		interface MemberWithId {
+			id: number,
+			name: string,
+			strikethrough: boolean
+		}
+		if (!this.availableToPlay) throw new Error()
+		const membersWithId = this.#members.reduce((acc: MemberWithId[], el, index) => {
+			const memberWithId: MemberWithId = { id: index, name: el.name, strikethrough: el.strikethrough }
+			return [...acc, memberWithId]
+		}, [])
+		
+		const availableMembers = membersWithId.filter(member => !member.strikethrough)
+		const indexOfCandidate = randomIntFromInterval(0, availableMembers.length - 1)
+		const candidate = availableMembers[indexOfCandidate]
+		this.#candidateToCurrent = candidate.name
+		this.#members[candidate.id].strikethrough = true
+	}
+
+	confirm(): void {
+		this.#current = this.#candidateToCurrent
+		this.#candidateToCurrent = null
+	}
+
+	reset(): void {
+		this.#current = null
+		this.#candidateToCurrent = null
+		this.#members = this.#members.map(member => new RouletteMember(member.name, false))
 	}
 
 	toPrimitives(): any {

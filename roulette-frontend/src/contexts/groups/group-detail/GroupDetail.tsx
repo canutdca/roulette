@@ -124,12 +124,12 @@ export function GroupDetail({ id }: GroupDetailProps) {
 											? <InputText
 												modeEditDefault={true}
 												value={""}
-												name="newSoulette"
+												name="newRoulette"
 												placeholder="New roulette name"
 												onChange={addNewRoulette}
 											/>
 											: <New onClick={() => setShowAddRoulette(true)}>
-												Add new member
+												Add new roulette
 											</New>
 										}
 									</li>
