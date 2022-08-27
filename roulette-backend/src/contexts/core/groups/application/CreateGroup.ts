@@ -35,7 +35,6 @@ export class CreateGroup {
 			request.ceremonies?.map(ceremony => new GroupCeremony(new GroupCeremonyId(ceremony.id), new GroupCeremonyName(ceremony.name))) || [],
 		)
 
-		console.log('antes', originalGroup)
 		await Promise.all([
 			this.repository.save(group),
 			originalGroup
@@ -65,17 +64,15 @@ export class CreateGroup {
 			}
 			if (originalCeremony!.name.value !== newCeremony.name.value ) ceremoniesToSave.push(newCeremony)
 		})
-		console.log('to save: ', ceremoniesToSave)
 		return ceremoniesToSave
 	}
 
 	private getCeremoniesToDelete(originalCeremonies: GroupCeremony[], newCeremonies: GroupCeremony[]): GroupCeremony[] {
-		console.log(originalCeremonies)
 		const ceremoniesToDelete: GroupCeremony[] = originalCeremonies.reduce((acc: GroupCeremony[], el) => {
-			if (newCeremonies.some(newCeremony => newCeremony.id === el.id)) return acc
+			if (newCeremonies.some(newCeremony => newCeremony.id.value === el.id.value))
+				return acc
 			return [...acc, el]
 		}, [])
-		console.log('to delete: ', ceremoniesToDelete)
 
 		return ceremoniesToDelete
 	}
