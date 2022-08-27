@@ -1,0 +1,11 @@
+services:
+
+  # Groups:
+  Apps.core.controllers.GroupsDeleteController:
+    class: ../../controllers/GroupsDeleteController
+    arguments: ['@Core.groups.application.DeleteGroups']
+
+  # Ceremonies:
+  Apps.core.controllers.CeremoniesDeleteController:
+    class: ../../controllers/CeremoniesDeleteController
+    arguments: ['@Core.ceremonies.application.DeleteCeremonies']

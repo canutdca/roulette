@@ -5,5 +5,6 @@ export interface CeremonyRepository {
 	getAll(): Promise<Ceremony[]>
 	getSingle(id: CeremonyId): Promise<Ceremony | null>
 	save(Ceremony: Ceremony): Promise<void>
-	delete(id: CeremonyId): Promise<void>
+	deleteSingle(id: CeremonyId): Promise<void>
+	deleteAll(): Promise<void>
 }

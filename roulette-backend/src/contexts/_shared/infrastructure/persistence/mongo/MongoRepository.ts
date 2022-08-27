@@ -28,4 +28,9 @@ export abstract class MongoRepository<T extends AggregateRoot> {
 		if (result.deletedCount === 0)
 			throw new PeristenceErrorBecauseNotExist()
 	}
+
+	protected async removeAll(): Promise<void> {
+		const collection = await this.collection()		
+		await collection.deleteMany({})
+	}
 }

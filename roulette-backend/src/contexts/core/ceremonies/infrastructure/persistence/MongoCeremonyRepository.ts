@@ -33,8 +33,12 @@ export class MongoCeremonyRepository extends MongoRepository<Ceremony> implement
 		return this.persist(ceremony.id.value, ceremony)
 	}
 
-	delete(id: CeremonyId): Promise<void> {
-		return this.remove(id.value);
+	deleteSingle(id: CeremonyId): Promise<void> {
+		return this.remove(id.value)
+	}
+
+	deleteAll(): Promise<void> {
+		return this.removeAll()
 	}
 
 	protected collectionName(): string {

@@ -75,7 +75,7 @@ export class CreateGroup {
 			if (newCeremonies.some(newCeremony => newCeremony.id === el.id)) return acc
 			return [...acc, el]
 		}, [])
-		console.log('to save: ', ceremoniesToDelete)
+		console.log('to delete: ', ceremoniesToDelete)
 
 		return ceremoniesToDelete
 	}

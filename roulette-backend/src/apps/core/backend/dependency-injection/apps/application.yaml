@@ -15,7 +15,7 @@ services:
 
   Apps.core.controllers.GroupDeleteController:
     class: ../../controllers/GroupDeleteController
-    arguments: ['@Core.groups.application.DeleteGroup']
+    arguments: ['@Core.groups.application.DeleteSingleGroup']
 
   # Ceremonies:
   Apps.core.controllers.CeremoniesGetController:
@@ -32,5 +32,4 @@ services:
 
   Apps.core.controllers.CeremonyDeleteController:
     class: ../../controllers/CeremonyDeleteController
-    arguments: ['@Core.ceremonies.application.DeleteCeremony']
-
+    arguments: ['@Core.ceremonies.application.DeleteSingleCeremony']

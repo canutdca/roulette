@@ -30,6 +30,10 @@ services:
     class: ../../../../../contexts/core/ceremonies/application/CreateCeremonyFromGroup
     arguments: ['@Core.ceremonies.domain.CeremonyRepository']
 
-  Core.ceremonies.application.DeleteCeremony:
-    class: ../../../../../contexts/core/ceremonies/application/DeleteCeremony
+  Core.ceremonies.application.DeleteSingleCeremony:
+    class: ../../../../../contexts/core/ceremonies/application/DeleteSingleCeremony
+    arguments: ['@Core.ceremonies.domain.CeremonyRepository']
+
+  Core.ceremonies.application.DeleteCeremonies:
+    class: ../../../../../contexts/core/ceremonies/application/DeleteCeremonies
     arguments: ['@Core.ceremonies.domain.CeremonyRepository']

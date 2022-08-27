@@ -33,8 +33,12 @@ export class MongoGroupRepository extends MongoRepository<Group> implements Grou
 		return this.persist(group.id.value, group)
 	}
 
-	delete(id: GroupId): Promise<void> {
+	deleteSingle(id: GroupId): Promise<void> {
 		return this.remove(id.value);
+	}
+
+	deleteAll(): Promise<void> {
+		return this.removeAll()
 	}
 
 	protected collectionName(): string {

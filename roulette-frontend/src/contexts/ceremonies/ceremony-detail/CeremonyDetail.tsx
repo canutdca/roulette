@@ -5,6 +5,7 @@ import { InputText } from '_shared/components/InputText'
 import { GROUP_PAGE_ROUTE } from '../../../routes/index';
 import { ModalToConfirm } from './ModalToConfirm';
 import { useCeremonyDetail } from './ceremony-detail.hook';
+import { Roulette } from './Roulette';
 
 export interface CeremonyDetailProps {
 	id: string
@@ -37,14 +38,18 @@ export function CeremonyDetail({ id }: CeremonyDetailProps) {
 
 	const renderPlay = () => (
 		<>
-		<button onClick={play}>PLAY</button>
-		{ceremonyAfterPlayBeforeConfirm && ceremonyAfterPlayBeforeConfirm.candidateToCurrent}
-		{ ceremonyAfterPlayBeforeConfirm &&
-			<ModalToConfirm
-				candidateName={ceremonyAfterPlayBeforeConfirm.candidateToCurrent!}
-				confirm={confirm}
-				cancel={cancelPlay}
-			/> }
+			<Roulette members={ ceremony!.members
+				.filter(member => !member.strikethrough)
+				.map(member => member.name) }
+			/>
+			<button onClick={play}>PLAY</button>
+			{ceremonyAfterPlayBeforeConfirm && ceremonyAfterPlayBeforeConfirm.candidateToCurrent}
+			{ ceremonyAfterPlayBeforeConfirm &&
+				<ModalToConfirm
+					candidateName={ceremonyAfterPlayBeforeConfirm.candidateToCurrent!}
+					confirm={confirm}
+					cancel={cancelPlay}
+				/> }
 		</>
 	)
 

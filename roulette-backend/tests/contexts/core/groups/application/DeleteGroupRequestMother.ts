@@ -1,4 +1,4 @@
-import { DeleteGroupRequest } from '../../../../../src/contexts/core/groups/application/DeleteGroupRequest'
+import { DeleteGroupRequest } from '../../../../../src/contexts/core/groups/application/DeleteSingleGroupRequest'
 import { GroupId } from '../../../../../src/contexts/core/_shared/domain/groups/GroupId'
 import { GroupIdMother } from '../../_shared/domain/groups/GroupIdMother'
 

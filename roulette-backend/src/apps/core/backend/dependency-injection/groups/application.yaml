@@ -20,7 +20,7 @@ services:
 
   Core.groups.domain.DeleteCeremony:
     class: ../../../../../contexts/core/groups/infrastructure/DeleteCeremonyApplication
-    arguments: ['@Core.ceremonies.application.DeleteCeremony']
+    arguments: ['@Core.ceremonies.application.DeleteSingleCeremony']
 
   Core.groups.application.GetGroups:
     class: ../../../../../contexts/core/groups/application/GetGroups
@@ -38,6 +38,10 @@ services:
       '@Core.groups.domain.DeleteCeremony'
     ]
 
-  Core.groups.application.DeleteGroup:
-    class: ../../../../../contexts/core/groups/application/DeleteGroup
+  Core.groups.application.DeleteSingleGroup:
+    class: ../../../../../contexts/core/groups/application/DeleteSingleGroup
+    arguments: ['@Core.groups.domain.GroupRepository']
+
+  Core.groups.application.DeleteGroups:
+    class: ../../../../../contexts/core/groups/application/DeleteGroups
     arguments: ['@Core.groups.domain.GroupRepository']
