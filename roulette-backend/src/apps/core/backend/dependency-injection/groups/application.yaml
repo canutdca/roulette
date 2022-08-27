@@ -14,13 +14,13 @@ services:
     class: ../../../../../contexts/core/groups/infrastructure/persistence/MongoGroupRepository
     arguments: ['@Core.ConnectionManager']
 
-  Core.groups.domain.CreateRoulette:
-    class: ../../../../../contexts/core/groups/infrastructure/CreateRouletteApplication
-    arguments: ['@Core.roulettes.application.CreateRouletteFromGroup']
+  Core.groups.domain.CreateCeremony:
+    class: ../../../../../contexts/core/groups/infrastructure/CreateCeremonyApplication
+    arguments: ['@Core.ceremonies.application.CreateCeremonyFromGroup']
 
-  Core.groups.domain.DeleteRoulette:
-    class: ../../../../../contexts/core/groups/infrastructure/DeleteRouletteApplication
-    arguments: ['@Core.roulettes.application.DeleteRoulette']
+  Core.groups.domain.DeleteCeremony:
+    class: ../../../../../contexts/core/groups/infrastructure/DeleteCeremonyApplication
+    arguments: ['@Core.ceremonies.application.DeleteCeremony']
 
   Core.groups.application.GetGroups:
     class: ../../../../../contexts/core/groups/application/GetGroups
@@ -34,8 +34,8 @@ services:
     class: ../../../../../contexts/core/groups/application/CreateGroup
     arguments: [
       '@Core.groups.domain.GroupRepository',
-      '@Core.groups.domain.CreateRoulette',
-      '@Core.groups.domain.DeleteRoulette'
+      '@Core.groups.domain.CreateCeremony',
+      '@Core.groups.domain.DeleteCeremony'
     ]
 
   Core.groups.application.DeleteGroup:

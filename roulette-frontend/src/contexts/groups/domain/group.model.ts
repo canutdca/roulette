@@ -1,7 +1,7 @@
 import { Cloneable } from 'contexts/_shared/domain/Cloneable.model'
 import { Saveable } from 'contexts/_shared/domain/Saveable.model'
 import { v4 as uuidv4 } from 'uuid'
-import { GroupRoulette } from './group-roulette.model';
+import { GroupCeremony } from './group-ceremony.model';
 
 export class Group implements Saveable, Cloneable<Group> {
 	#id: string
@@ -22,16 +22,16 @@ export class Group implements Saveable, Cloneable<Group> {
 		return this.#members
 	}
 
-	#roulettes: GroupRoulette[]
-	get roulettes(): GroupRoulette[] {
-		return this.#roulettes
+	#ceremonies: GroupCeremony[]
+	get ceremonies(): GroupCeremony[] {
+		return this.#ceremonies
 	}
 
-	constructor(id: string = '', name: string = '', members: string[] = [], roulettes: { id: string, name: string }[] = []) {
+	constructor(id: string = '', name: string = '', members: string[] = [], ceremonies: { id: string, name: string }[] = []) {
 		this.#id = id || uuidv4()
 		this.#name = name
 		this.#members = members
-		this.#roulettes = roulettes?.map(roulette => new GroupRoulette(roulette.id, roulette.name))
+		this.#ceremonies = ceremonies?.map(ceremony => new GroupCeremony(ceremony.id, ceremony.name))
 	}
 
 	addMember(newMember: string) {
@@ -46,19 +46,19 @@ export class Group implements Saveable, Cloneable<Group> {
 		this.#members = this.#members.filter((_, i) => i !== indexMember)
 	}
 
-	addRoulette(newRouletteName: string): string {
-		const newGroup = new GroupRoulette('', newRouletteName)
-		this.#roulettes = [...this.#roulettes, newGroup]
+	addCeremony(newCeremonyName: string): string {
+		const newGroup = new GroupCeremony('', newCeremonyName)
+		this.#ceremonies = [...this.#ceremonies, newGroup]
 		return newGroup.id
 	}
 
-	editRoulette(rouletteId: string, newNameMember: string) {
-		const asd = this.#roulettes.find(roulette => roulette.id === rouletteId)
+	editCeremony(ceremonyId: string, newNameMember: string) {
+		const asd = this.#ceremonies.find(ceremony => ceremony.id === ceremonyId)
 		asd!.name = newNameMember
 	}
 	
-	deleteRoulette(rouletteId: string) {
-		this.#roulettes = this.#roulettes.filter(roulette => roulette.id !== rouletteId)
+	deleteCeremony(ceremonyId: string) {
+		this.#ceremonies = this.#ceremonies.filter(ceremony => ceremony.id !== ceremonyId)
 	}
 
 	toPrimitives(): any {
@@ -66,7 +66,7 @@ export class Group implements Saveable, Cloneable<Group> {
 			id: this.#id,
 			name: this.#name,
 			members: this.#members,
-			roulettes: this.#roulettes?.map(roulette => ({id: roulette.id, name: roulette.name }))
+			ceremonies: this.#ceremonies?.map(ceremony => ({id: ceremony.id, name: ceremony.name }))
 		}
 	}
 
@@ -74,12 +74,12 @@ export class Group implements Saveable, Cloneable<Group> {
 		id: string
 		name: string
 		members: string[]
-		roulettes: { id: string, name: string }[]
+		ceremonies: { id: string, name: string }[]
 	}): Group {
-		return new Group(plainData.id, plainData.name, plainData.members, plainData.roulettes)
+		return new Group(plainData.id, plainData.name, plainData.members, plainData.ceremonies)
 	}
 
 	clone(): Group {
-		return new Group(this.#id, this.#name, this.#members, this.#roulettes)
+		return new Group(this.#id, this.#name, this.#members, this.#ceremonies)
 	}
 }

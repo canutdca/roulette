@@ -1,7 +1,7 @@
-describe('Roulette App', () => {
+describe('Ceremony App', () => {
 	it('frontpage can be open', () => {
 		cy.visit('http://localhost:3000/')
-		cy.contains('Roulette')
+		cy.contains('Ceremony')
 	})
 	it('group can be created', () => {
 		cy.visit('http://localhost:3000/')

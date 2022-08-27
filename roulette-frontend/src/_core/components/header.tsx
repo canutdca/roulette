@@ -9,7 +9,7 @@ export function Header() {
 
 	return (
 		<Root>
-			<H1 onClick={goToHome}>Roulette</H1>
+			<H1 onClick={goToHome}>ROULETTE</H1>
 		</Root>
 	)
 }

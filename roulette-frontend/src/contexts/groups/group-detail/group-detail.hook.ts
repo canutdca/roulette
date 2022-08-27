@@ -61,24 +61,24 @@ export function useGroupDetail(id: string | undefined) {
 		}
 	}
 
-	const addRoulette = async (newRoulleteName: string): Promise<string> => {
+	const addCeremony = async (newRoulleteName: string): Promise<string> => {
 		if (!newRoulleteName) return Promise.resolve('')
 		const groupUpdating = group!.clone()
 		try {
-			const newRouletteId = groupUpdating.addRoulette(newRoulleteName)
+			const newCeremonyId = groupUpdating.addCeremony(newRoulleteName)
 			setGroup(groupUpdating)
 			await saveGroupApi(groupUpdating)
-			return newRouletteId
+			return newCeremonyId
 		} catch (error: any) {
 			return error.message
 		}
 	}
 
-	const editRoulette = async (rouletteId: string, editedRouletteName: string): Promise<void> => {
-		if (!editedRouletteName) return Promise.resolve()
+	const editCeremony = async (ceremonyId: string, editedCeremonyName: string): Promise<void> => {
+		if (!editedCeremonyName) return Promise.resolve()
 		const groupUpdating = group!.clone()
 		try {
-			groupUpdating.editRoulette(rouletteId, editedRouletteName)
+			groupUpdating.editCeremony(ceremonyId, editedCeremonyName)
 			setGroup(groupUpdating)
 			return saveGroupApi(groupUpdating)
 		} catch (error: any) {
@@ -86,10 +86,10 @@ export function useGroupDetail(id: string | undefined) {
 		}
 	}
 	
-	const deleteRoulette = async (rouletteId: string): Promise<void> => {
+	const deleteCeremony = async (ceremonyId: string): Promise<void> => {
 		const groupUpdating = group!.clone()
 		try {
-			groupUpdating.deleteRoulette(rouletteId)
+			groupUpdating.deleteCeremony(ceremonyId)
 			setGroup(groupUpdating)
 			return saveGroupApi(groupUpdating)
 		} catch (error: any) {
@@ -105,8 +105,8 @@ export function useGroupDetail(id: string | undefined) {
 		addMember,
 		editMember,
 		deleteMember,
-		addRoulette,
-		editRoulette,
-		deleteRoulette
+		addCeremony,
+		editCeremony,
+		deleteCeremony
 	}
 }

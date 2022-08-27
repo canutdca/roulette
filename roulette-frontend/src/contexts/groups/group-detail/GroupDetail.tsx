@@ -4,7 +4,7 @@ import { useNavigation } from '_core/hooks/useNavigation'
 import { InputText } from '_shared/components/InputText'
 import { HOME_ROUTE } from '../../../routes'
 import { useGroupDetail } from './group-detail.hook'
-import { ROULETTE_PAGE_ROUTE } from '../../../routes/index';
+import { CEREMONY_PAGE_ROUTE } from '../../../routes/index';
 
 export interface GroupDetailProps {
 	id: string | undefined
@@ -21,13 +21,13 @@ export function GroupDetail({ id }: GroupDetailProps) {
 		addMember,
 		editMember,
 		deleteMember,
-		addRoulette,
-		editRoulette,
-		deleteRoulette
+		addCeremony,
+		editCeremony,
+		deleteCeremony
 	} = useGroupDetail(id)
 
 	const [showAddMember, setShowAddMember] = useState<boolean>(false)
-	const [showAddRoulette, setShowAddRoulette] = useState<boolean>(false)
+	const [showAddCeremony, setShowAddCeremony] = useState<boolean>(false)
 
 	useEffect(() => {
 		getGroup()
@@ -38,13 +38,13 @@ export function GroupDetail({ id }: GroupDetailProps) {
 		setShowAddMember(false)
 	}
 
-	const addNewRoulette = async (newMember: string) => {
-		const newRouletteId = await addRoulette(newMember)
-		goToRoulette(newRouletteId)
+	const addNewCeremony = async (newMember: string) => {
+		const newCeremonyId = await addCeremony(newMember)
+		goToCeremony(newCeremonyId)
 	}
 
-	const goToRoulette = async (rouletteId: string) => {
-		goTo(`${ROULETTE_PAGE_ROUTE}/${rouletteId}`)
+	const goToCeremony = async (ceremonyId: string) => {
+		goTo(`${CEREMONY_PAGE_ROUTE}/${ceremonyId}`)
 	}
 
 	const remove = async (): Promise<void> => {
@@ -103,33 +103,33 @@ export function GroupDetail({ id }: GroupDetailProps) {
 								</Ul>
 							</section>
 							<section>
-								<header><h4>Roulettes</h4></header>
+								<header><h4>Ceremonies</h4></header>
 								<Ul className="list">
-									{ group.roulettes.map((roulette) =>
-										<li key={roulette.id} onClick={() => goToRoulette(roulette.id)}>
+									{ group.ceremonies.map((ceremony) =>
+										<li key={ceremony.id} onClick={() => goToCeremony(ceremony.id)}>
 											<InputText
-												value={roulette.name}
-												name={'roulette_' + roulette.name}
-												placeholder={roulette.name}
+												value={ceremony.name}
+												name={'ceremony_' + ceremony.name}
+												placeholder={ceremony.name}
 												showDeleteButton={true}
-												onChange={(newName) => editRoulette(roulette.id, newName)}
-												onDelete={() => deleteRoulette(roulette.id)}
-												onClickDuringText={() => goToRoulette(roulette.id)}
+												onChange={(newName) => editCeremony(ceremony.id, newName)}
+												onDelete={() => deleteCeremony(ceremony.id)}
+												onClickDuringText={() => goToCeremony(ceremony.id)}
 											/>
 										</li>
 									)}
 									<li>
 									{
-										showAddRoulette
+										showAddCeremony
 											? <InputText
 												modeEditDefault={true}
 												value={""}
-												name="newRoulette"
-												placeholder="New roulette name"
-												onChange={addNewRoulette}
+												name="newCeremony"
+												placeholder="New ceremony name"
+												onChange={addNewCeremony}
 											/>
-											: <New onClick={() => setShowAddRoulette(true)}>
-												Add new roulette
+											: <New onClick={() => setShowAddCeremony(true)}>
+												Add new ceremony
 											</New>
 										}
 									</li>

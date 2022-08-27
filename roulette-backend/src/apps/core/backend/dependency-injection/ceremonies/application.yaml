@@ -1,0 +1,35 @@
+services:
+  Core.MongoConfig:
+    factory:
+      class: ../../../../../contexts/core/_shared/infrastructure/persistence/mongo/MongoConfigFactory
+      method: 'createConfig'
+
+  Core.ConnectionManager:
+    factory:
+      class: ../../../../../contexts/_shared/infrastructure/persistence/mongo/MongoClientFactory
+      method: 'createClient'
+    arguments: ['core', '@Core.MongoConfig']
+
+  Core.ceremonies.domain.CeremonyRepository:
+    class: ../../../../../contexts/core/ceremonies/infrastructure/persistence/MongoCeremonyRepository
+    arguments: ['@Core.ConnectionManager']
+
+  Core.ceremonies.application.GetCeremonies:
+    class: ../../../../../contexts/core/ceremonies/application/GetCeremonies
+    arguments: ['@Core.ceremonies.domain.CeremonyRepository']
+
+  Core.ceremonies.application.GetSingleCeremony:
+    class: ../../../../../contexts/core/ceremonies/application/GetSingleCeremony
+    arguments: ['@Core.ceremonies.domain.CeremonyRepository']
+
+  Core.ceremonies.application.CreateCeremony:
+    class: ../../../../../contexts/core/ceremonies/application/CreateCeremony
+    arguments: ['@Core.ceremonies.domain.CeremonyRepository']
+
+  Core.ceremonies.application.CreateCeremonyFromGroup:
+    class: ../../../../../contexts/core/ceremonies/application/CreateCeremonyFromGroup
+    arguments: ['@Core.ceremonies.domain.CeremonyRepository']
+
+  Core.ceremonies.application.DeleteCeremony:
+    class: ../../../../../contexts/core/ceremonies/application/DeleteCeremony
+    arguments: ['@Core.ceremonies.domain.CeremonyRepository']

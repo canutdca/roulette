@@ -17,7 +17,7 @@ export class GetSingleGroup {
 			id: group.id.value,
 			name: group.name.value,
 			members: group.members?.map(member => member.value),
-			roulettes: group.roulettes?.map(roulette => ({id: roulette.id.value, name: roulette.name.value }))
+			ceremonies: group.ceremonies?.map(ceremony => ({id: ceremony.id.value, name: ceremony.name.value }))
 		}
 	}
 }

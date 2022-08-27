@@ -2,35 +2,35 @@ import { GroupId } from '../../_shared/domain/groups/GroupId'
 import { GroupName } from './GroupName'
 import { AggregateRoot } from '../../../_shared/domain/AggregateRoot'
 import { GroupMember } from './GroupMember'
-import { GroupRoulette } from './GroupRoulette'
-import { GroupRouletteId } from './GroupRouletteId';
-import { GroupRouletteName } from './GroupRouletteName'
+import { GroupCeremony } from './GroupCeremony'
+import { GroupCeremonyId } from './GroupCeremonyId';
+import { GroupCeremonyName } from './GroupCeremonyName'
 
 export class Group extends AggregateRoot {
 	readonly id: GroupId
 	readonly name: GroupName
 	readonly members: GroupMember[]
-	readonly roulettes: GroupRoulette[]
+	readonly ceremonies: GroupCeremony[]
 
-	constructor(id: GroupId, name: GroupName, members: GroupMember[], roulettes: GroupRoulette[]) {
+	constructor(id: GroupId, name: GroupName, members: GroupMember[], ceremonies: GroupCeremony[]) {
 		super()
 		this.id = id
 		this.name = name
 		this.members = members
-		this.roulettes = roulettes
+		this.ceremonies = ceremonies
 	}
 
 	static fromPrimitives(plainData: {
 		id: string
 		name: string
 		members: string[]
-		roulettes: {id: string, name: string}[]
+		ceremonies: {id: string, name: string}[]
 	}): Group {
 		return new Group(
 			new GroupId(plainData.id),
 			new GroupName(plainData.name),
 			plainData.members?.map(member => new GroupMember(member)),
-			plainData.roulettes?.map(roulette => new GroupRoulette(new GroupRouletteId(roulette.id), new GroupRouletteName(roulette.name)))
+			plainData.ceremonies?.map(ceremony => new GroupCeremony(new GroupCeremonyId(ceremony.id), new GroupCeremonyName(ceremony.name)))
 		)
 	}
 
@@ -39,7 +39,7 @@ export class Group extends AggregateRoot {
 			id: this.id.value,
 			name: this.name.value,
 			members: this.members.map(member => member.value),
-			roulettes: this.roulettes.map(roulette => ({ id: roulette.id.value, name: roulette.name.value })),
+			ceremonies: this.ceremonies.map(ceremony => ({ id: ceremony.id.value, name: ceremony.name.value })),
 		}
 	}
 }

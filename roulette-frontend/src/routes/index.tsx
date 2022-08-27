@@ -3,14 +3,14 @@ import { Route } from 'wouter'
 
 export const HOME_ROUTE = '/'
 export const GROUP_PAGE_ROUTE = '/group'
-export const ROULETTE_PAGE_ROUTE = '/roulette'
+export const CEREMONY_PAGE_ROUTE = '/ceremony'
 
 export function Routes() {
 	return (
 		<Fragment>
 			<Route path={HOME_ROUTE} component={renderHomePage} />
 			<Route path={`${GROUP_PAGE_ROUTE}/:id?`} component={renderGroupPage} />
-			<Route path={`${ROULETTE_PAGE_ROUTE}/:id?`} component={renderRoulettePage} />
+			<Route path={`${CEREMONY_PAGE_ROUTE}/:id?`} component={renderCeremonyPage} />
 		</Fragment>
 	)
 }
@@ -33,11 +33,11 @@ const renderGroupPage = () => {
 	)
 }
 
-const renderRoulettePage = () => {
-	const RoulettePage = lazy(() => import('pages/RoulettePage'))
+const renderCeremonyPage = () => {
+	const CeremonyPage = lazy(() => import('pages/CeremonyPage'))
 	return (
 		<Suspense fallback={<></>}>
-			<RoulettePage />
+			<CeremonyPage />
 		</Suspense>
 	)
 }

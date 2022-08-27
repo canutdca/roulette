@@ -6,5 +6,5 @@ export interface GroupResponse {
 	id: string
 	name: string
 	members: string[]
-	roulettes: { id: string, name: string }[]
+	ceremonies: { id: string, name: string }[]
 }

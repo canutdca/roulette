@@ -14,7 +14,7 @@ export async function getGroupApi(id: string): Promise<Group> {
 		id: response.id,
 		name: response.name,
 		members: response.members,
-		roulettes: response.roulettes
+		ceremonies: response.ceremonies
 	})
 }
 

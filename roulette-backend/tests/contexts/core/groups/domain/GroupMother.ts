@@ -4,7 +4,7 @@ import { GroupId } from '../../../../../src/contexts/core/_shared/domain/groups/
 import { GroupIdMother } from '../../_shared/domain/groups/GroupIdMother'
 import { GroupNameMother } from './GroupNameMother'
 import { GroupMemberMother } from './GroupMemberMother'
-import { GroupRouletteMother } from './GroupRouletteMother'
+import { GroupCeremonyMother } from './GroupCeremonyMother'
 
 export class GroupMother {
 	static random(): Group {
@@ -12,7 +12,7 @@ export class GroupMother {
 			GroupIdMother.random(),
 			GroupNameMother.random(),
 			ListMother.randomWithRandomElements(GroupMemberMother.random),
-			ListMother.randomWithRandomElements(GroupRouletteMother.random)
+			ListMother.randomWithRandomElements(GroupCeremonyMother.random)
 		)
 	}
 
@@ -21,7 +21,7 @@ export class GroupMother {
 			id,
 			GroupNameMother.random(),
 			ListMother.randomWithRandomElements(GroupMemberMother.random),
-			ListMother.randomWithRandomElements(GroupRouletteMother.random)
+			ListMother.randomWithRandomElements(GroupCeremonyMother.random)
 		)
 	}
 }

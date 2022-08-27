@@ -2,7 +2,7 @@ import { ListMother } from './../../../_shared/domain/ListMother'
 import { Group } from '../../../../../src/contexts/core/groups/domain/Group'
 import { GroupId } from '../../../../../src/contexts/core/_shared/domain/groups/GroupId'
 import { GroupMother } from '../domain/GroupMother'
-import { GroupRepository } from './../../../../../src/contexts/core/groups/domain/GroupRepository'
+import { GroupRepository } from '../../../../../src/contexts/core/groups/domain/GroupRepository'
 
 export class GroupRepositoryMock implements GroupRepository {
 	private mockSave = jest.fn()

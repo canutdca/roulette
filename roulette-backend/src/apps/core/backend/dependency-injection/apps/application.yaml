@@ -17,20 +17,20 @@ services:
     class: ../../controllers/GroupDeleteController
     arguments: ['@Core.groups.application.DeleteGroup']
 
-  # Roulettes:
-  Apps.core.controllers.RoulettesGetController:
-    class: ../../controllers/RoulettesGetController
-    arguments: ['@Core.roulettes.application.GetRoulettes']
+  # Ceremonies:
+  Apps.core.controllers.CeremoniesGetController:
+    class: ../../controllers/CeremoniesGetController
+    arguments: ['@Core.ceremonies.application.GetCeremonies']
 
-  Apps.core.controllers.RouletteGetController:
-    class: ../../controllers/RouletteGetController
-    arguments: ['@Core.roulettes.application.GetSingleRoulette']
+  Apps.core.controllers.CeremonyGetController:
+    class: ../../controllers/CeremonyGetController
+    arguments: ['@Core.ceremonies.application.GetSingleCeremony']
 
-  Apps.core.controllers.RoulettePutController:
-    class: ../../controllers/RoulettePutController
-    arguments: ['@Core.roulettes.application.CreateRoulette']
+  Apps.core.controllers.CeremonyPutController:
+    class: ../../controllers/CeremonyPutController
+    arguments: ['@Core.ceremonies.application.CreateCeremony']
 
-  Apps.core.controllers.RouletteDeleteController:
-    class: ../../controllers/RouletteDeleteController
-    arguments: ['@Core.roulettes.application.DeleteRoulette']
+  Apps.core.controllers.CeremonyDeleteController:
+    class: ../../controllers/CeremonyDeleteController
+    arguments: ['@Core.ceremonies.application.DeleteCeremony']
 

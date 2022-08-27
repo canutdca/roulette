@@ -6,16 +6,16 @@ import { GroupId } from '../../../../../src/contexts/core/_shared/domain/groups/
 import { GroupIdMother } from '../../_shared/domain/groups/GroupIdMother'
 import { GroupNameMother } from '../domain/GroupNameMother'
 import { GroupMemberMother } from '../domain/GroupMemberMother'
-import { GroupRoulette } from '../../../../../src/contexts/core/groups/domain/GroupRoulette'
-import { GroupRouletteMother } from '../domain/GroupRouletteMother'
+import { GroupCeremonyMother } from '../domain/GroupCeremonyMother'
+import { GroupCeremony } from '../../../../../src/contexts/core/groups/domain/GroupCeremony'
 
 export class CreateGroupRequestMother {
-	static create(id: GroupId, name: GroupName, members: GroupMember[], roulettes: GroupRoulette[]): CreateGroupRequest {
+	static create(id: GroupId, name: GroupName, members: GroupMember[], ceremonies: GroupCeremony[]): CreateGroupRequest {
 		return {
 			id: id.value,
 			name: name.value,
 			members: members.map(member => member.value),
-			roulettes: roulettes.map(roulette => ({ id: roulette.id.value, name: roulette.name.value }))
+			ceremonies: ceremonies.map(ceremony => ({ id: ceremony.id.value, name: ceremony.name.value }))
 		}
 	}
 
@@ -24,7 +24,7 @@ export class CreateGroupRequestMother {
 			GroupIdMother.random(),
 			GroupNameMother.random(),
 			ListMother.randomWithRandomElements(GroupMemberMother.random),
-			ListMother.randomWithRandomElements(GroupRouletteMother.random)
+			ListMother.randomWithRandomElements(GroupCeremonyMother.random)
 		)
 	}
 }

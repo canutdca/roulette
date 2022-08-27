@@ -4,25 +4,25 @@ import { GroupName } from '../domain/GroupName'
 import { GroupRepository } from '../domain/GroupRepository'
 import { GroupMember } from '../domain/GroupMember'
 import { CreateGroupRequest } from './CreateGroupRequest'
-import { GroupRoulette } from '../domain/GroupRoulette'
-import { GroupRouletteName } from '../domain/GroupRouletteName'
-import { GroupRouletteId } from '../domain/GroupRouletteId'
-import { CreateRoulette } from '../domain/CreateRoulette'
-import { DeleteRoulette } from '../domain/DeleteRoulette'
+import { GroupCeremony } from '../domain/GroupCeremony'
+import { GroupCeremonyName } from '../domain/GroupCeremonyName'
+import { GroupCeremonyId } from '../domain/GroupCeremonyId'
+import { CreateCeremony } from '../domain/CreateCeremony'
+import { DeleteCeremony } from '../domain/DeleteCeremony'
 
 export class CreateGroup {
 	private readonly repository: GroupRepository
-	private readonly createRoulette: CreateRoulette
-	private readonly deleteRoulette: DeleteRoulette
+	private readonly createCeremony: CreateCeremony
+	private readonly deleteCeremony: DeleteCeremony
 
 	constructor(
 		repository: GroupRepository,
-		createRoulette: CreateRoulette,
-		deleteRoulette: DeleteRoulette
+		createCeremony: CreateCeremony,
+		deleteCeremony: DeleteCeremony
 	) {
 		this.repository = repository
-		this.createRoulette = createRoulette
-		this.deleteRoulette = deleteRoulette
+		this.createCeremony = createCeremony
+		this.deleteCeremony = deleteCeremony
 	}
 
 	async run(request: CreateGroupRequest): Promise<void> {
@@ -32,47 +32,51 @@ export class CreateGroup {
 			new GroupId(request.id),
 			new GroupName(request.name),
 			request.members?.map(member => new GroupMember(member)) || [],
-			request.roulettes?.map(roulette => new GroupRoulette(new GroupRouletteId(roulette.id), new GroupRouletteName(roulette.name))) || [],
+			request.ceremonies?.map(ceremony => new GroupCeremony(new GroupCeremonyId(ceremony.id), new GroupCeremonyName(ceremony.name))) || [],
 		)
 
+		console.log('antes', originalGroup)
 		await Promise.all([
 			this.repository.save(group),
 			originalGroup
-				&& this.getRoulettesToSave(originalGroup.roulettes, group.roulettes)
-					.map(groupRoulette =>
-						this.createRoulette.create(
-							groupRoulette.id.value,
+				&& this.getCeremoniesToSave(originalGroup.ceremonies, group.ceremonies)
+					.map(groupCeremony =>
+						this.createCeremony.create(
+							groupCeremony.id.value,
 							group.id.value,
-							groupRoulette.name.value,
+							groupCeremony.name.value,
 							group.members.map(member => member.value)
 						)
 					),
 			originalGroup
-				&& this.getRoulettesToDelete(originalGroup.roulettes, group.roulettes)
-					.map(groupRoulette => this.deleteRoulette.delete(groupRoulette.id.value))
+				&& this.getCeremoniesToDelete(originalGroup.ceremonies, group.ceremonies)
+					.map(groupCeremony => this.deleteCeremony.delete(groupCeremony.id.value))
 		])
-		// TODO: do this with a command bus or similar for save the roulettes
+		// TODO: do this with a command bus or similar for save the ceremonies
 	}
 
-	private getRoulettesToSave(originalRoulettes: GroupRoulette[], newRoulettes: GroupRoulette[]): GroupRoulette[] {
-		const rouletesToSave: GroupRoulette[] = []
-		newRoulettes.forEach(newRoulette => {
-			const originalRoulette = originalRoulettes.find(original => original.id.value === newRoulette.id.value)
-			if (!originalRoulette) {
-				rouletesToSave.push(newRoulette)
+	private getCeremoniesToSave(originalCeremonies: GroupCeremony[], newCeremonies: GroupCeremony[]): GroupCeremony[] {
+		const ceremoniesToSave: GroupCeremony[] = []
+		newCeremonies.forEach(newCeremony => {
+			const originalCeremony = originalCeremonies.find(original => original.id.value === newCeremony.id.value)
+			if (!originalCeremony) {
+				ceremoniesToSave.push(newCeremony)
 				return 
 			}
-			if (originalRoulette!.name.value !== newRoulette.name.value ) rouletesToSave.push(newRoulette)
+			if (originalCeremony!.name.value !== newCeremony.name.value ) ceremoniesToSave.push(newCeremony)
 		})
-
-		return rouletesToSave
+		console.log('to save: ', ceremoniesToSave)
+		return ceremoniesToSave
 	}
 
-	private getRoulettesToDelete(originalRoulettes: GroupRoulette[], newRoulettes: GroupRoulette[]): GroupRoulette[] {
-		const rouletesToDelete: GroupRoulette[] = originalRoulettes.reduce((acc: GroupRoulette[], el) => {
-			if (newRoulettes.some(newRoulette => newRoulette.id === el.id)) return acc
+	private getCeremoniesToDelete(originalCeremonies: GroupCeremony[], newCeremonies: GroupCeremony[]): GroupCeremony[] {
+		console.log(originalCeremonies)
+		const ceremoniesToDelete: GroupCeremony[] = originalCeremonies.reduce((acc: GroupCeremony[], el) => {
+			if (newCeremonies.some(newCeremony => newCeremony.id === el.id)) return acc
 			return [...acc, el]
 		}, [])
-		return rouletesToDelete
+		console.log('to save: ', ceremoniesToDelete)
+
+		return ceremoniesToDelete
 	}
 }
