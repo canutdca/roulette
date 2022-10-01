@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import { useEffect, useRef } from "react"
+import { useRoulette } from "./useRoulette"
 
 export interface RouletteProps {
 	members: string[]
@@ -7,36 +8,27 @@ export interface RouletteProps {
 
 export function Roulette({ members }: RouletteProps) {
 
+	const membersWithColor = (): {member: string, color: string}[] => {
+		return members.map(member => ({
+			member,
+			color:  `#${Math.floor(Math.random()*16777215).toString(16)}`
+		}))
+	}
+
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
-	const center = 200
+	const { drawRoullete } = useRoulette(membersWithColor(), 400)
+	
 	useEffect(() => {
 		const canvas: HTMLCanvasElement = canvasRef.current!
-		const ctx = canvas!.getContext('2d')!
-		const center = 200
-
-
-		const complete = 2 * Math.PI
-		ctx.moveTo(center,center);
-		ctx.arc(center,center,center,0,complete/4);
-		ctx.lineTo(center,center);
-		ctx.fillStyle = 'blue'
-		ctx.font = "30px Arial";
-		ctx.fill()
-		
-		
-		ctx.save();
-		ctx.fillStyle = 'white'
-		ctx.translate(200, 200);
-		ctx.rotate(Math.PI/4);
-		ctx.fillText("David asd", 20, 10);
-		ctx.restore();
-
-
+		drawRoullete(canvas)
 	}, [canvasRef])
-
 	
 	return <Canvas ref={canvasRef} width="400" height="400"/>
 
+}
+
+function radiant2Angle(radiant: number): number {
+	return radiant * 180 / Math.PI
 }
 const Canvas = styled.canvas`
 	border: 1px solid grey;
