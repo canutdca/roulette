@@ -7,29 +7,22 @@ export interface RouletteProps {
 }
 
 export function Roulette({ members }: RouletteProps) {
-
-	const membersWithColor = (): {member: string, color: string}[] => {
-		return members.map(member => ({
-			member,
-			color:  `#${Math.floor(Math.random()*16777215).toString(16)}`
-		}))
-	}
+	const canvasSize = 400
 
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
-	const { drawRoullete } = useRoulette(membersWithColor(), 400)
+	const { drawRoullete, spinRoulette } = useRoulette(members, canvasSize)
 	
 	useEffect(() => {
 		const canvas: HTMLCanvasElement = canvasRef.current!
 		drawRoullete(canvas)
 	}, [canvasRef])
 	
-	return <Canvas ref={canvasRef} width="400" height="400"/>
-
+	return <>
+		<button onClick={spinRoulette}>spin</button>
+		<Canvas ref={canvasRef} width={canvasSize} height={canvasSize}/>
+	</>
 }
 
-function radiant2Angle(radiant: number): number {
-	return radiant * 180 / Math.PI
-}
 const Canvas = styled.canvas`
 	border: 1px solid grey;
 	border-radius: 50%;

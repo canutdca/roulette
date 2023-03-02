@@ -9,7 +9,7 @@ import { CeremonyMemberStrikethrough } from "../domain/CeremonyMemberStrikethrou
 import { CeremonyRepository } from "../domain/CeremonyRepository"
 import { CreateCeremonyRequest } from "./CreateCeremonyRequest"
 
-export class CreateCeremony{
+export class CreateCeremony {
 	private readonly repository: CeremonyRepository
 
 	constructor(repository: CeremonyRepository) {

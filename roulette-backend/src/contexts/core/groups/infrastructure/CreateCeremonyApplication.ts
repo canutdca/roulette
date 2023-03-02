@@ -1,7 +1,7 @@
-import { CreateCeremony as ICreateCeremony } from "../domain/CreateCeremony"
+import { CreateCeremony } from "../domain/CreateCeremony"
 import { CreateCeremonyFromGroup } from "../../ceremonies/application/CreateCeremonyFromGroup"
 
-export class CreateCeremonyApplication implements ICreateCeremony {
+export class CreateCeremonyApplication implements CreateCeremony {
 
 	constructor(private createCeremony: CreateCeremonyFromGroup) {}
 
