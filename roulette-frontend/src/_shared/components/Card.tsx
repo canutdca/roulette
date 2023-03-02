@@ -1,33 +1,37 @@
-import styled from '@emotion/styled'
-import { SlottableComponent } from '../../_core/slottable-component'
+import MaterialCard from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
-interface RCardProps extends SlottableComponent {
-	color?: 'primary' | 'secundary'
+interface CardProps {
+	containerName?: string
+	title: string
 }
 
-export function Card({ children, color = 'primary' }: RCardProps) {
-
-	const Root = styled.div`
-		height: 150px;
-		aspect-ratio: 1 / 1;
-		background-color: ${color === 'primary' ? '#85b2d2' : '#5ba6cd'};
-		color: #323232;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-		transition: all .05s ease-in-out;
-
-		&:hover {
-			background-color: #96c3e3;
-			transform: scale(1.05);
-		}
-	`
+export function Card({ containerName, title}: CardProps) {
 	return (
-		<Root>
-			<span>
-				{children}
-			</span>
-		</Root>
-	)
+		<MaterialCard sx={styles}>
+			<CardContent>
+				{containerName &&
+					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+						{containerName}
+					</Typography>
+				}
+				<Typography variant="h5" component="div">
+					{title}
+				</Typography>
+			</CardContent>
+		</MaterialCard>
+	);
+}
+
+const styles = {
+	minWidth: 275,
+	cursor: 'default',
+	'&:hover': {
+		backgroundColor: '#96c3e3',
+		transform: 'scale(1.05)'
+	},
+	'&:hover:active': {
+		backgroundColor: '#90aede',
+	}
 }

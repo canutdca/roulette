@@ -13,6 +13,9 @@
 			"contexts/*": [
 				"./src/contexts/*"
 			],
+			"contexts/*": [
+				"./src/assets/*"
+			],
 			"__mocks__/*": [
 				"./src/__mocks__/*"
 			],

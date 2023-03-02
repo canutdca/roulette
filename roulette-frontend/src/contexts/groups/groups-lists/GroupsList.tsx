@@ -30,30 +30,25 @@ export function GroupsList() {
 			{groups.map((group) => (
 				<div key={group.id}>
 					<Article onClick={() => goToGroupDetail(group.id)}>
-						<Card>
-							{group.name}
-						</Card>
+						<Card containerName={'Squad 21'} title={group.name} />
 					</Article>
 				</div>
 			))}
 
 			<Article onClick={() => goToNewGroup()}>
 			<div data-testid="new">
-				<Card color={'secundary'}>
-					New group
-				</Card>
+				<Card containerName={'Squad 21'} title={'New group'}/>
 			</div>
 			</Article>
 			{/* <button onClick={() => setShow(!show)}>toggle</button>
 			{show && <h3>contenido</h3>} */}
-
-			<button onClick={goToNewGroup}>navigate</button>
 		</Section>
 
 	)
 }
 
 const Section = styled.section`
+	margin-top: 2rem;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;

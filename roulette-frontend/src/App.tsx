@@ -3,6 +3,7 @@ import { Header } from '_core/components/Header'
 import { Footer } from '_core/components/Footer'
 import styled from '@emotion/styled'
 import './app.css'
+import { maxWidth } from './styles.constants'
 
 function App() {
 
@@ -40,7 +41,7 @@ const HeaderContainer = styled.header`
 
 const MainContainer = styled.main`
 	grid-area: main;
-	max-width: 1200px;
+	max-width: ${maxWidth};
 	margin: 0 10%;
 `
 
